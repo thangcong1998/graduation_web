@@ -1,0 +1,31 @@
+.body {
+  position: relative;
+  height: 100%;
+}
+.auto-play-slide div{
+  overflow: none!important;
+  height: 100%;
+}
+.auto-play-slide {
+  height: 100%;
+}
+.full-screen {
+  height: 100%;
+  width: 100%;
+  overflow: unset!important;
+}
+.form {
+  position: absolute;
+  top: 100px;
+  padding-left: 100px;
+}
+.label label{
+  color: black;
+  font-size: 15px;
+}
+.input1 input{
+  margin:10px;
+}
+.helper-text{
+  color: red;
+}

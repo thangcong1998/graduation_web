@@ -1,0 +1,43 @@
+FROM php:7.3-fpm-alpine
+
+# timezone
+ARG TZ
+
+RUN set -eux && \
+  apk update && \
+  apk add --update --no-cache --virtual=.build-dependencies \
+  autoconf \
+  gcc \
+  g++ \
+  make
+
+RUN apk add --update --no-cache \
+  icu-dev \
+  libzip-dev \
+  libpng \
+  libpng-dev \
+  libjpeg-turbo-dev \
+  libwebp-dev \
+  zlib-dev \
+  libxpm-dev \
+  gd \
+  tzdata \
+  git \
+  supervisor
+
+RUN apk del .build-dependencies
+
+RUN echo ${TZ} > /etc/timezone
+
+RUN docker-php-ext-install intl pdo_mysql mbstring zip bcmath gd
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/bin --filename=composer && \
+  composer config -g repos.packagist composer https://packagist.org && \
+  composer global require hirak/prestissimo
+
+# Copy supervisord conf
+COPY supervisor/supervisord.conf /etc/supervisord.conf
+
+# Expose port 9000 and start supervisor: php-fpm server & worker
+EXPOSE 9000
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

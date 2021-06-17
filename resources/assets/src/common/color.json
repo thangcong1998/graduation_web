@@ -1,0 +1,8 @@
+{
+  "primary": "#2196F3",
+  "secondary": "#f50057",
+  "success": "#07BC0C",
+  "error": "#E74C3C",
+  "warning": "#ecd100",
+  "disabled": "#e7e7e7"
+}

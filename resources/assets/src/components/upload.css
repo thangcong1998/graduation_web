@@ -1,0 +1,79 @@
+.fileSelected {
+  padding: 0px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  border: none;
+}
+.infoFile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+input[type="file"] {
+  display: none;
+}
+.opacity {
+  opacity: 100%;
+}
+.maxHeightImage {
+  max-height: 400px;
+}
+.overlayLayout {
+  position: fixed;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 1000px;
+  max-height: 400px;
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+}
+.crossIcon {
+  color: white;
+  position: fixed;
+  top: 0;
+  right: 0;
+}
+.listSmallImage {
+  position: fixed;
+  margin: auto;
+  top: 85%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+}
+.smallImage {
+  height: 60px;
+  width: 60px;
+  margin-left: 20px;
+}
+.buttonImage {
+  height: 60px;
+  width: 60px;
+}
+.backgroundFile {
+  height: 80px;
+  width: 350px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  margin-right: 3px;
+  overflow: hidden;
+  background-color: #f3f3f3;
+}
+.nameFile {
+  width: 100%;
+  padding-top: 5px;
+  height: 40px;
+  overflow: hidden;
+  font-size: 13px;
+}
+

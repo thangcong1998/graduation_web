@@ -1,0 +1,17 @@
+.cal-card-header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(16, 22, 26, 0.15);
+}
+.cal-h6 {
+    margin-left: 10px;
+}
+.attribute-group-tab {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 0;
+    margin-left: 0;
+    margin-bottom: 30px;
+}

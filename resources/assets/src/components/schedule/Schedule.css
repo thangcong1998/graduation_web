@@ -1,0 +1,11 @@
+.agenda-style > td {
+  background-color: #ffffff !important;
+}
+.rbc-month-header,
+.rbc-time-header-cell {
+  min-height: 40px !important;
+}
+.rbc-time-header-cell div,
+.rbc-month-header div {
+  font-size: 1rem !important;
+}
