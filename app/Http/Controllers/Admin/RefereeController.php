@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Helpers\SyncDataSeagameGms;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\RefereeStoreRequest;
 use App\Http\Requests\RefereeUpdateRequest;

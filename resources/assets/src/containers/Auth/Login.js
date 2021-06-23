@@ -1,6 +1,5 @@
 import React, { useEffect, useContext } from "react";
 import mascot from "../../assets/mascot.png";
-import seagame31 from "../../assets/seagame31.png";
 import { makeStyles } from "@material-ui/core/styles";
 import { useTranslation } from "react-i18next";
 import {
@@ -382,7 +381,6 @@ export default function Login(props) {
                                     "/" +
                                     data?.logo_url
                                 }
-                                alt="seagame31"
                             />
                         </div>
                         <div>

@@ -658,10 +658,10 @@
     "hello": "Hello",
     "change_password":"Change password",
     "log_out":"Log out",
-    "content": "31st SEA GAMES VIETNAM 2021",
+    "content": "Sports management system 2021",
     "content1": "31",
     "content2": "st",
-    "content3": "SEA GAMES VIETNAM 2021"
+    "content3": "Sports management system 2021"
   },
   "sidebar": {
     "parent": {
@@ -1618,7 +1618,7 @@
     "take_time":"Date",
     "result_record":"Result record",
     "description" :"Description",
-    "is_seagame":"Seagame",
+    "sport":"Sport",
     "is_asiad":"Asiad",
     "is_olympic":"Olympic",
     "unit":"Unit",
@@ -1630,7 +1630,7 @@
     "centimeter":"Centimeter",
     "match":"Match",
     "goal":"Goal",
-    "is_seagame_31": "Seagame 31",
+    "sport": "Sport",
     "point": "Point",
     "time": "Time",
     "result_record_time": "Result record time"

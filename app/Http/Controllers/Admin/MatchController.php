@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CountryCreateRequest;
 use App\Http\Requests\CountryUpdateRequest;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Helpers\SyncDataSeagameGms;
 use App\Http\Requests\MatchCreateRequest;
 use App\Http\Requests\MatchUpdateRequest;
 use App\Models\EventStatistic;

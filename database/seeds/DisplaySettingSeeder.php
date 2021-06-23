@@ -13,11 +13,11 @@ class DisplaySettingSeeder extends Seeder
      */
     public function run()
     {
-        File::copyDirectory("public/assets/images/setting","storage/app/public/setting");
+        File::copyDirectory("public/assets/images/setting", "storage/app/public/setting");
         DB::table('display_setting')->truncate();
         DB::table('display_setting')->insert([
             'image_url' => 'setting/mascot.png',
-            'logo_url' => 'setting/seagame31.png'
+            'logo_url' => 'setting/graduation31.png'
         ]);
         DB::table('files')->insert([
             [

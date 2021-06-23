@@ -20,8 +20,6 @@ use App\Models\Functions;
 use App\Http\Requests\FunctionCreateRequest;
 use App\Http\Requests\FunctionUpdateRequest;
 use Illuminate\Support\Facades\DB;
-use App\Helpers\SyncDataSeagameGms;
-use Illuminate\Support\Facades\Lang;
 
 class FunctionController extends ApiResourceController
 {
@@ -203,40 +201,6 @@ class FunctionController extends ApiResourceController
         $content = $formpdf->download()->getOriginalContent();
 
         Storage::put('public/TemplatePDF/' . $cardTemplate->name . '.pdf', $content);
-    }
-    public function syncData(Request $request)
-    {
-        $syncData = new SyncDataSeagameGms();
-
-        $method = "GET";
-        $endpoint = "function";
-        $params = ["per_page" => 1000];
-        $data =   $syncData->syncdata($method, $endpoint, $params);
-        $function = $data->data;
-        // return $function;
-        Functions::query()->forceDelete();
-        DB::beginTransaction();
-        try {
-            foreach ($function as $dt) {
-                // return response()->json($dt);
-                Functions::insert([
-                    'id' => $dt->id,
-                    'name' => $dt->name,
-                    'english_name' => $dt->english_name,
-                    'code' => $dt->code,
-                    'organization_id' => $dt->organization_id,
-                    'sub_code' => $dt->sub_code,
-                    'card_template_id' => $dt->card_template_id,
-                    'is_staff' => $dt->is_staff,
-                    'is_volunteer' => $dt->is_volunteer,
-                ]);
-            }
-            DB::commit();
-            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);
-        } catch (\Exception $e) {
-            throw  $e;
-            $this->errorResponseSystem();
-        }
     }
     public function destroy(Request $request, $id)
     {

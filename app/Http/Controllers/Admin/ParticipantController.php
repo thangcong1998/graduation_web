@@ -33,7 +33,6 @@ use PHPUnit\Exception;
 use App\Exports\DataExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\App;
-use App\Helpers\SyncDataSeagameGms;
 
 
 class ParticipantController extends ApiResourceController

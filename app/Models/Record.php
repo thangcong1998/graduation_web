@@ -12,7 +12,7 @@ class Record extends Model implements Auditable
     use SoftDeletes;
     protected $table = 'records';
     protected $fillable = [
-        'event_id', 'country_id', 'is_seagame','is_seagame_31', 'is_asiad', 'is_olympic', 'taker_name',
+        'event_id', 'country_id', 'is_graduation', 'is_graduation_31', 'is_asiad', 'is_olympic', 'taker_name',
         'take_place', 'take_time', 'result_record', 'unit', 'description', 'competitor_id', 'result_record_time'
     ];
 

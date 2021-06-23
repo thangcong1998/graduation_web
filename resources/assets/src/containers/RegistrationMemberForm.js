@@ -122,7 +122,11 @@ export default function RegistrationMember(props) {
   const { admin, user } = useContext(AuthContext);
   const params = useParams();
   const [pre, setPre] = useState(false);
-  const { data: profile, loading: loading, revalidate: refetch } = useFetch(
+  const {
+    data: profile,
+    loading: loading,
+    revalidate: refetch,
+  } = useFetch(
     params?.id
       ? [
           "get",
@@ -157,14 +161,6 @@ export default function RegistrationMember(props) {
   const [oldReg, setOldReg] = useState([]);
 
   const registerSchema = Yup.object().shape({
-    organization: Yup.object()
-      .required(
-        t("member_registration.organization") + " " + t("errors.required")
-      )
-      .nullable(),
-    function: Yup.object()
-      .required(t("member_registration.function") + " " + t("errors.required"))
-      .nullable(),
     responsible_organization: Yup.string()
       .required(
         t("member_registration.responsible_organization") +
@@ -564,56 +560,6 @@ export default function RegistrationMember(props) {
     formik.handleSubmit();
   };
 
-  const generateCard = async () => {
-    try {
-      await formik.setFieldValue("approval_status", 2);
-      await formik.setFieldValue("render", 1);
-      formik.handleSubmit();
-    } catch (e) {}
-  };
-
-  const downloadFileScan = async () => {
-    try {
-      let res = await api.fetcher(
-        "get",
-        `/admin/downloadFileScan/${params?.id}?file_scan=true`,
-        {},
-        { responseType: "blob" }
-      );
-      if (res) {
-        const url = window.URL.createObjectURL(new Blob([res]));
-        const link = document.createElement("a");
-        link.href = url;
-        const fileScanDowndload = fileScan.split(".");
-        link.setAttribute(
-          "download",
-          fileScanDowndload[fileScanDowndload.length - 1] == "pdf"
-            ? "FileScan.pdf"
-            : "FileScan.png"
-        );
-        document.body.appendChild(link);
-        link.click();
-      }
-    } catch (e) {}
-  };
-  const downloadDoping = async (cardNo) => {
-    try {
-      let res = await api.fetcher(
-        "get",
-        `/admin/downloadDoping/${params?.id}`,
-        {},
-        { responseType: "blob" }
-      );
-      if (res) {
-        const url = window.URL.createObjectURL(new Blob([res]));
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", cardNo + ".pdf");
-        document.body.appendChild(link);
-        link.click();
-      }
-    } catch (e) {}
-  };
   const downloadApplication = async () => {
     await formik.setFieldValue("downloadApplication", true);
     formik.handleSubmit();
@@ -863,105 +809,9 @@ export default function RegistrationMember(props) {
         )}
       </Grid>
       <Grid className={classes.group}>
-        {/* 1. Select Category and Responsible Organization for Job Function Selection/Chọn chức năng, vai trò trong tổ chức*/}
-        <div className={classes.title}>
-          1. {t("member_registration.group1")}
-        </div>
-        <Grid justify="center" container spacing={1}>
-          <Grid item md={4} xs={12}>
-            <Autocomplete
-              label={t("member_registration.organization") + " *"}
-              queryField={"abbreviation_like"}
-              labelField={"abbreviation"}
-              endpoint="/admin/organization"
-              handleChange={(e) => {
-                formik.setFieldValue("organization", e);
-                formik.setFieldValue("organization_id", e?.id);
-                formik.setFieldValue("function", null);
-                formik.setFieldValue("card_template", null);
-              }}
-              value={formik.values.organization}
-              error={
-                api.error?.organization_id ||
-                (formik.touched.organization && formik.errors.organization)
-              }
-            />
-          </Grid>
-          <Grid item md={4} xs={12}>
-            <Autocomplete
-              label={t("member_registration.function") + " *"}
-              queryField={
-                i18n.languages[0] === "en" ? "english_name_like" : "name_like"
-              }
-              labelField={i18n.languages[0] === "en" ? "english_name" : "name"}
-              endpoint={
-                formik.values.organization
-                  ? "/admin/function" +
-                    "?organization_id_equal=" +
-                    formik.values.organization?.id
-                  : null
-              }
-              handleChange={(e) => {
-                formik.setFieldValue("function", e);
-                formik.setFieldValue("function_id", e?.id);
-                formik.setFieldValue("card_template_id", e?.card_template_id);
-                formik.setFieldValue("card_template", e?.card_template);
-              }}
-              params={{}}
-              value={formik.values.function}
-              error={
-                api.error?.function_id ||
-                (formik.touched.function && formik.errors.function)
-              }
-            />
-          </Grid>
-          <Grid item md={4} xs={12}>
-            <Autocomplete
-              freeSolo
-              label={t("member_registration.card_template")}
-              queryField="name_like"
-              labelField="name"
-              endpoint={null}
-              // handleChange={(e) => {
-              //   formik.setFieldValue("card_template", e);
-              // }}
-              value={formik.values.card_template}
-              error={
-                api.error?.card_template_id ||
-                (formik.touched.card_template && formik.errors.card_template)
-              }
-              disabled={true}
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid className={classes.group}>
-        {/*  2. Responsible Organization/Tổ chức chịu trách nhiệm*/}
-        <div className={classes.title}>
-          2. {t("member_registration.group2")}
-        </div>
-        <Grid justify="center" container spacing={1}>
-          <Grid item md={12} xs={12}>
-            <TextInput
-              variant={"outlined"}
-              label={t("member_registration.responsible_organization") + " *"}
-              value={formik.values?.responsible_organization}
-              handleChange={(e) =>
-                formik.setFieldValue("responsible_organization", e)
-              }
-              error={
-                api.error?.responsible_organization ||
-                (formik.touched.responsible_organization &&
-                  formik.errors.responsible_organization)
-              }
-            />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid className={classes.group}>
         {/*  3. Full name as in passport/others travel document/Tên ghi trong hộ chiếu hoặc chứng minh thư*/}
         <div className={classes.title}>
-          3. {t("member_registration.group3")}
+          1. {t("member_registration.group3")}
         </div>
         <Grid justify="center" container spacing={1}>
           <Grid item md={6} xs={12}>
@@ -993,7 +843,7 @@ export default function RegistrationMember(props) {
       <Grid className={classes.group}>
         {/*  4. Passport no/Số hộ chiếu*/}
         <div className={classes.title}>
-          4. {t("member_registration.group4")}
+          2. {t("member_registration.group4")}
         </div>
         <Grid justify="center" container spacing={1}>
           <Grid item md={6} xs={12}>
@@ -1038,7 +888,7 @@ export default function RegistrationMember(props) {
       <Grid className={classes.group}>
         {/*  5. Personal Identtity Card No. (Vietnam only)/Số chứng minh thư hoặc thẻ căn cước (CMT/CC)*/}
         <div className={classes.title}>
-          5. {t("member_registration.group5")}
+          3. {t("member_registration.group5")}
         </div>
         <Grid justify="center" container spacing={1}>
           <Grid item md={4} xs={12}>
@@ -1103,7 +953,7 @@ export default function RegistrationMember(props) {
         <Grid item className={classes.group} md={4} xs={12}>
           {/*  6. Date of birth/Ngày sinh*/}
           <div className={classes.title}>
-            6. {t("member_registration.group9") + "(DD/MM/YYYY) *"}
+            4. {t("member_registration.group9") + "(DD/MM/YYYY) *"}
           </div>
           <DatePicker
             size={"small"}
@@ -1127,7 +977,7 @@ export default function RegistrationMember(props) {
       <Grid className={classes.group}>
         {/*  7. sex/Giới tính*/}
         <div className={classes.title}>
-          7. {t("member_registration.group6") + " *"}
+          5. {t("member_registration.group6") + " *"}
         </div>
         <Grid justify="flex-start" container spacing={1}>
           <Radios
@@ -1152,7 +1002,7 @@ export default function RegistrationMember(props) {
         <Grid item className={classes.group} md={6} xs={12}>
           {/*  8. Height/Chiều cao*/}
           <div className={classes.title}>
-            8. {t("member_registration.group7") + "(cm) *"}
+            6. {t("member_registration.group7") + "(cm) *"}
           </div>
           <TextInput
             variant={"outlined"}
@@ -1168,7 +1018,7 @@ export default function RegistrationMember(props) {
         <Grid item className={classes.group} md={6} xs={12}>
           {/*  9. Weight/Cân nặng*/}
           <div className={classes.title}>
-            9. {t("member_registration.group8") + "(kg) *"}
+            7. {t("member_registration.group8") + "(kg) *"}
           </div>
           <TextInput
             variant={"outlined"}
@@ -1186,7 +1036,7 @@ export default function RegistrationMember(props) {
         <Grid item className={classes.group} md={4} xs={12}>
           {/*  10. Category of birth/Nơi sinh*/}
           <div className={classes.title}>
-            10. {t("member_registration.group10") + " *"}
+            8. {t("member_registration.group10") + " *"}
           </div>
           <Autocomplete
             label={t("member_registration.country_of_birth")}
@@ -1205,7 +1055,7 @@ export default function RegistrationMember(props) {
         <Grid item className={classes.group} md={4} xs={12}>
           {/*  11. Nationality/Quốc tịch*/}
           <div className={classes.title}>
-            11. {t("member_registration.group11") + " *"}
+            9. {t("member_registration.group11") + " *"}
           </div>
           <Autocomplete
             label={t("member_registration.nationality")}
@@ -1223,7 +1073,7 @@ export default function RegistrationMember(props) {
         <Grid item className={classes.group} md={4} xs={12}>
           {/*  12. NOC/Đoàn*/}
           <div className={classes.title}>
-            12. {t("member_registration.group12") + " *"}
+            10. {t("member_registration.group12") + " *"}
           </div>
           <Autocomplete
             disabled={user ? true : false}
@@ -1243,7 +1093,7 @@ export default function RegistrationMember(props) {
       <Grid className={classes.group}>
         {/*  13. Permanent Address/Địa chỉ thường trú*/}
         <div className={classes.title}>
-          13. {t("member_registration.group13")}
+          11. {t("member_registration.group13")}
         </div>
         <Grid justify="center" container spacing={1}>
           <Grid item md={12} xs={12}>
@@ -1266,7 +1116,7 @@ export default function RegistrationMember(props) {
       <Grid className={classes.group}>
         {/*  14. Sport/Discipline/Môn thể thao:*/}
         <div className={classes.title}>
-          14. {t("member_registration.group14")}
+          12. {t("member_registration.group14")}
         </div>
         <Grid justify="center" container spacing={1}>
           <Grid item md={6} xs={12}>
@@ -1324,10 +1174,10 @@ export default function RegistrationMember(props) {
         </div>
       </Grid>
       <Grid justify="center" container spacing={1}>
-        <Grid item md={6} xs={12} className={classes.group}>
+        <Grid item md={12} xs={12} className={classes.group}>
           {/*  15. Register People Picture */}
           <div className={classes.title}>
-            15. {t("member_registration.group15") + " *"}
+            13. {t("member_registration.group15") + " *"}
           </div>
           <Grid className={classes.note}>
             {t("member_registration.profile_url_note")}
@@ -1346,211 +1196,10 @@ export default function RegistrationMember(props) {
             />
           </Grid>
         </Grid>
-        <Grid item md={6} xs={12} className={classes.group}>
-          {/*  16. Photo copy of valid passport */}
-          <div className={classes.title}>
-            16. {t("member_registration.group16")}
-          </div>
-          <Grid className={classes.note}>
-            {t("member_registration.profile_url_note")}
-          </Grid>
-          <Grid style={{ width: 300, height: 400 }}>
-            <UploadOnePicture
-              files={personalIdCard}
-              setFiles={setPersonalIdCard}
-              title={i18n.t("drag_drop.default")}
-              height={"400px"}
-              width={"300px"}
-              error={
-                api.error?.personal_id_card ||
-                (formik.touched.personal_id_card &&
-                  formik.errors.personal_id_card)
-              }
-            />
-          </Grid>
-        </Grid>
       </Grid>
 
       <Grid container spacing={1}>
-        {/* {user && (
-                    <Grid item md={6} xs={12} className={classes.group}>
-                        <div className={classes.title}>
-                            17. {t("member_registration.file_scan")}
-                        </div>
-                        <Grid style={{ width: 300, height: 400 }}>
-                            <UploadOnePicture
-                                files={fileScan}
-                                setFiles={setFileScan}
-                                accept={[".pdf"]}
-                                title={i18n.t("drag_drop.default")}
-                                height={400}
-                                width={300}
-                                readOnly={!user ? true : false}
-                            />
-                        </Grid>
-                    </Grid>
-                )} */}
-        {/* {user && params?.id && (
-                    <Grid item md={6} xs={12} className={classes.group}>
-                        <div className={classes.title}>
-                            {t("member_registration.doping")}
-                        </div>
-                        <Grid className={classes.note}>
-                            {t("member_registration.profile_url_note")}
-                        </Grid>
-                        <Grid style={{ width: 300, height: 400 }}>
-                            <UploadOnePicture
-                                accept={"application/pdf"}
-                                files={doping}
-                                setFiles={setDoping}
-                                title={i18n.t("drag_drop.default")}
-                                height={400}
-                                width={300}
-                                readOnly={!user ? true : false}
-                            />
-                        </Grid>
-                    </Grid>
-                )} */}
-        {admin && params?.id && (
-          <Grid container spacing={1}>
-            {/* <Grid item md={6} xs={12} className={classes.group}>
-                            <div className={classes.title}>
-                                17. {t("member_registration.file_scan")}
-                            </div>
-                            <Grid style={{ width: 300, height: 400 }}>
-                                <Grid
-                                    onClick={fileScan ? downloadFileScan : null}
-                                >
-                                    <UploadOnePicture
-                                        files={fileScan}
-                                        setFiles={setFileScan}
-                                        title={
-                                            fileScan
-                                                ? i18n.t("drag_drop.default")
-                                                : t(
-                                                      "member_registration.no_file_scan"
-                                                  )
-                                        }
-                                        height={"400px"}
-                                        width={"auto"}
-                                        readOnly={!user ? true : false}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </Grid> */}
-            {/* <Grid item md={6} xs={12} className={classes.group}>
-                            <div className={classes.title}>
-                                {t("member_registration.doping")}
-                            </div>
-                            <Grid className={classes.note}>
-                                {t("member_registration.profile_url_note")}
-                            </Grid>
-                            <Grid style={{ width: 300, height: 400 }}>
-                                <Grid
-                                    onClick={() =>
-                                        doping
-                                            ? downloadDoping(
-                                                  formik?.values?.card_no
-                                              )
-                                            : null
-                                    }
-                                >
-                                    <UploadOnePicture
-                                        accept={"application/pdf"}
-                                        files={doping}
-                                        setFiles={setDoping}
-                                        title={
-                                            doping
-                                                ? i18n.t("drag_drop.default")
-                                                : t(
-                                                      "member_registration.no_doping"
-                                                  )
-                                        }
-                                        height={"400px"}
-                                        width={"auto"}
-                                        readOnly={!user ? true : false}
-                                    />
-                                </Grid>
-                            </Grid>
-                        </Grid> */}
-          </Grid>
-        )}
-
-        {/* {params?.id && formik?.values?.approval_status === 2 && (
-                    <Grid item className={classes.group} md={6} xs={12}>
-                        <div className={classes.title}>
-                            18. {t("member_registration.printed_status")}
-                        </div>
-                        <Grid justify="flex-start" container spacing={1}>
-                            <Radios
-                                value={formik.values.printed_status}
-                                handleChange={(e) => {
-                                    formik.setFieldValue("printed_status", e);
-                                    if (e == 1) {
-                                        formik.setFieldValue(
-                                            "received_status",
-                                            1
-                                        );
-                                    }
-                                }}
-                                flexDirection={"row"}
-                                options={[
-                                    {
-                                        label: t("print.NotPrintedYet"),
-                                        value: 1,
-                                    },
-                                    {
-                                        label: t("print.printed"),
-                                        value: 2,
-                                    },
-                                ]}
-                                error={
-                                    api.error?.printed_status ||
-                                    (formik.touched.printed_status &&
-                                        formik.errors.printed_status)
-                                }
-                            />
-                        </Grid>
-                    </Grid>
-                )} */}
-        {/* {params?.id && formik?.values?.approval_status === 2 && (
-                    <Grid item className={classes.group} md={6} xs={12}>
-                        <div className={classes.title}>
-                            19. {t("member_registration.received_status")}
-                        </div>
-                        <Grid justify="flex-start" container spacing={1}>
-                            <Radios
-                                value={formik.values.received_status}
-                                handleChange={(e) => {
-                                    formik.setFieldValue("received_status", e);
-                                    if (e == 2) {
-                                        formik.setFieldValue(
-                                            "printed_status",
-                                            2
-                                        );
-                                    }
-                                }}
-                                flexDirection={"row"}
-                                options={[
-                                    {
-                                        label: t("receive.NotReceivedYet"),
-                                        value: 1,
-                                    },
-                                    {
-                                        label: t("receive.received"),
-                                        value: 2,
-                                    },
-                                ]}
-                                error={
-                                    api.error?.received_status ||
-                                    (formik.touched.received_status &&
-                                        formik.errors.received_status)
-                                }
-                            />
-                        </Grid>
-                    </Grid>
-                )} */}
-
+       
         <Grid container>
           {!profile && (
             <ButtonSolashi

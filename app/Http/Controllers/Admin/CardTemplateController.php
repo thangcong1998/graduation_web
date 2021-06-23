@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CardTemplateCreateRequest;
 use App\Http\Requests\CardTemplateUpdateRequest;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Helpers\SyncDataSeagameGms;
 use Illuminate\Support\Facades\Lang;
 
 class CardTemplateController extends ApiResourceController
@@ -208,34 +207,5 @@ class CardTemplateController extends ApiResourceController
         $content = $formpdf->download()->getOriginalContent();
 
         Storage::put('public/TemplatePDF/' . $cardTemplate->name . '.pdf', $content);
-    }
-    public function syncData(Request $request)
-    {
-        $syncData = new SyncDataSeagameGms();
-        $method = "GET";
-        $endpoint = "cardTemplate";
-        $params = null;
-        $data =   $syncData->syncdata($method, $endpoint, $params);
-        $cardTemplate = $data->data;
-        // return $cardTemplate;
-        CardTemplate::query()->forceDelete();
-        DB::beginTransaction();
-        try {
-            foreach ($cardTemplate as $dt) {
-                // return response()->json($dt);
-                CardTemplate::insert([
-                    'id' => $dt->id,
-                    'name' => $dt->name,
-                    'background_color' => $dt->background_color,
-                    'text' => $dt->text,
-                    'text_color' => $dt->text_color,
-                ]);
-            }
-            DB::commit();
-            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);
-        } catch (\Exception $e) {
-            throw  $e;
-            $this->errorResponseSystem();
-        }
     }
 }

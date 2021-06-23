@@ -27,10 +27,8 @@ export default function (props) {
         initialValues: {
             event: null,
             country: null,
-            is_seagame: 2,
             is_asiad: 1,
             is_olympic: 1,
-            is_seagame_31: 1,
             taker_name: null,
             take_place: null,
             take_time: null,
@@ -52,12 +50,12 @@ export default function (props) {
                     values?.country ? values?.country?.id : ""
                 );
                 formData.append(
-                    "is_seagame",
-                    values?.is_seagame ? values?.is_seagame : ""
+                    "is_graduation",
+                    values?.is_graduation ? values?.is_graduation : ""
                 );
                 formData.append(
-                    "is_seagame_31",
-                    values?.is_seagame_31 ? values?.is_seagame_31 : ""
+                    "is_graduation_31",
+                    values?.is_graduation_31 ? values?.is_graduation_31 : ""
                 );
                 formData.append(
                     "is_asiad",
@@ -218,8 +216,8 @@ export default function (props) {
             );
             formik.setFieldValue("event", data?.event);
             formik.setFieldValue("country", data?.country);
-            formik.setFieldValue("is_seagame", data?.is_seagame);
-            formik.setFieldValue("is_seagame_31", data?.is_seagame_31);
+            formik.setFieldValue("is_graduation", data?.is_graduation);
+            formik.setFieldValue("is_graduation_31", data?.is_graduation_31);
             formik.setFieldValue("is_asiad", data?.is_asiad);
             formik.setFieldValue("is_olympic", data?.is_olympic);
             formik.setFieldValue("taker_name", data?.taker_name);
@@ -458,46 +456,46 @@ export default function (props) {
                     grid: { xs: 12, sm: 6, md: 6 },
                 },
                 {
-                    field: "is_seagame",
-                    label: t("record_screen.is_seagame"),
-                    value: formik.values?.is_seagame == 2 ? true : false,
+                    field: "is_graduation",
+                    label: t("record_screen.is_graduation"),
+                    value: formik.values?.is_graduation == 2 ? true : false,
                     required: true,
                     handleChange: (e) => {
-                        formik.setFieldValue("is_seagame", e == true ? 2 : 1);
+                        formik.setFieldValue("is_graduation", e == true ? 2 : 1);
                         if (e === true) {
                             formik.setFieldValue("is_asiad", 1) &&
                             formik.setFieldValue("is_olympic", 1) &&
-                            formik.setFieldValue("is_seagame_31", 1);
+                            formik.setFieldValue("is_graduation_31", 1);
                         }
                     },
                     inputVariant: "outlined",
                     type: "switch",
                     grid: { xs: 12, sm: 3, md: 3 },
                     error:
-                        api.error?.is_seagame ||
-                        (formik.touched.is_seagame &&
-                            formik.errors?.is_seagame),
+                        api.error?.is_graduation ||
+                        (formik.touched.is_graduation &&
+                            formik.errors?.is_graduation),
                 },
                 {
-                    field: "is_seagame_31",
-                    label: t("record_screen.is_seagame_31"),
-                    value: formik.values?.is_seagame_31 == 2 ? true : false,
+                    field: "is_graduation_31",
+                    label: t("record_screen.is_graduation_31"),
+                    value: formik.values?.is_graduation_31 == 2 ? true : false,
                     required: true,
                     handleChange: (e) => {
-                        formik.setFieldValue("is_seagame_31", e == true ? 2 : 1);
+                        formik.setFieldValue("is_graduation_31", e == true ? 2 : 1);
                         if (e === true) {
                             formik.setFieldValue("is_asiad", 1) &&
                             formik.setFieldValue("is_olympic", 1) &&
-                            formik.setFieldValue("is_seagame", 1);
+                            formik.setFieldValue("is_graduation", 1);
                         }
                     },
                     inputVariant: "outlined",
                     type: "switch",
                     grid: { xs: 12, sm: 3, md: 3 },
                     error:
-                        api.error?.is_seagame_31 ||
-                        (formik.touched.is_seagame_31 &&
-                            formik.errors?.is_seagame_31),
+                        api.error?.is_graduation_31 ||
+                        (formik.touched.is_graduation_31 &&
+                            formik.errors?.is_graduation_31),
                 },
                 {
                     field: "is_asiad",
@@ -507,9 +505,9 @@ export default function (props) {
                     handleChange: (e) => {
                         formik.setFieldValue("is_asiad", e == true ? 2 : 1);
                         if (e === true) {
-                            formik.setFieldValue("is_seagame", 1) &&
+                            formik.setFieldValue("is_graduation", 1) &&
                             formik.setFieldValue("is_olympic", 1)&&
-                            formik.setFieldValue("is_seagame_31", 1);
+                            formik.setFieldValue("is_graduation_31", 1);
                         }
                     },
                     inputVariant: "outlined",
@@ -528,8 +526,8 @@ export default function (props) {
                         formik.setFieldValue("is_olympic", e == true ? 2 : 1);
                         if (e === true) {
                             formik.setFieldValue("is_asiad", 1) &&
-                            formik.setFieldValue("is_seagame", 1)&&
-                            formik.setFieldValue("is_seagame_31", 1);
+                            formik.setFieldValue("is_graduation", 1)&&
+                            formik.setFieldValue("is_graduation_31", 1);
                         }
                     },
                     inputVariant: "outlined",

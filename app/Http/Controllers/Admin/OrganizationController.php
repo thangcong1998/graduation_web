@@ -10,9 +10,6 @@ use App\Models\Organization;
 use App\Http\Requests\OrganizationCreateRequest;
 use App\Http\Requests\OrganizationUpdateRequest;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Helpers\SyncDataSeagameGms;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\DB;
 
 class OrganizationController extends ApiResourceController
 {
@@ -90,35 +87,6 @@ class OrganizationController extends ApiResourceController
 
         if ($request->trashed) {
             $this->query->onlyTrashed();
-        }
-    }
-    public function syncData(Request $request)
-    {
-        $syncData = new SyncDataSeagameGms();
-        $method = "GET";
-        $endpoint = "organization";
-        $params = null;
-        $data =   $syncData->syncdata($method, $endpoint, $params);
-        $organization = $data->data;
-        // return $organization;
-        Organization::query()->forceDelete();
-        DB::beginTransaction();
-        try {
-            foreach ($organization as $dt) {
-                // return response()->json($dt);
-                Organization::insert([
-                    'id' => $dt->id,
-                    'name' => $dt->name,
-                    'english_name' => $dt->english_name,
-                    'abbreviation' => $dt->abbreviation,
-                    'is_holder' => $dt->is_holder,
-                ]);
-            }
-            DB::commit();
-            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);
-        } catch (\Exception $e) {
-            throw  $e;
-            $this->errorResponseSystem();
         }
     }
 }

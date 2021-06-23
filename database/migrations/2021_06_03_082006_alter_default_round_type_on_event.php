@@ -14,7 +14,7 @@ class AlterDefaultRoundTypeOnEvent extends Migration
      */
     public function up()
     {
-        DB::statement("ALTER TABLE `seagame-info`.`sport_discipline_events`
+        DB::statement("ALTER TABLE `graduation-info`.`sport_discipline_events`
        CHANGE COLUMN `round_type` `round_type` TINYINT(3) UNSIGNED NULL DEFAULT 3
        ");
     }

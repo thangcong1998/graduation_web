@@ -43,7 +43,7 @@ class MatchRoundController extends ApiResourceController
         DB::beginTransaction();
         try {
             $record = Record::query()->where([
-                "is_seagame_31" => 2,
+                "is_graduation_31" => 2,
                 "event_id" => $request->event_id
             ])->first();
             if($record)
@@ -101,11 +101,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $competitor['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record_time' => $competitor['final_score'],
@@ -120,11 +120,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $competitor['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => $competitor['final_score'],
@@ -215,11 +215,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $competitor['name']." - ".$competitor['team']['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record_time' => $competitor['final_score'],
@@ -234,11 +234,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $competitor['name']." - ".$competitor['team']['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => $competitor['final_score'],
@@ -388,7 +388,7 @@ class MatchRoundController extends ApiResourceController
         DB::beginTransaction();
         try {
             $record = Record::query()->where([
-                "is_seagame_31" => 2,
+                "is_graduation_31" => 2,
                 "event_id" => $request->event_id
             ])->first();
             if($record)
@@ -444,11 +444,11 @@ class MatchRoundController extends ApiResourceController
                         Record::updateOrCreate(
                             [
                                 'event_id' => $request->event_id,
-                                'is_seagame_31' => 2,
+                                'is_graduation_31' => 2,
                             ],
                             [
                                 'taker_name' => $dataResult['name'],
-                                'take_place' => "Seagame 31 - Vietnam",
+                                'take_place' => "graduation 31 - Vietnam",
                                 'unit' => $request->unit,
                                 'take_time' => date("Y-m-d"),
                                 'result_record' => $dataResult['score'],
@@ -484,11 +484,11 @@ class MatchRoundController extends ApiResourceController
                         Record::updateOrCreate(
                             [
                                 'event_id' => $request->event_id,
-                                'is_seagame_31' => 2,
+                                'is_graduation_31' => 2,
                             ],
                             [
                                 'taker_name' => $dataResult['name'],
-                                'take_place' => "Seagame 31 - Vietnam",
+                                'take_place' => "graduation 31 - Vietnam",
                                 'unit' => $request->unit,
                                 'take_time' => date("Y-m-d"),
                                 'result_record' => $dataResult['score'],
@@ -688,7 +688,7 @@ class MatchRoundController extends ApiResourceController
                 ]
             );
             $record = Record::query()->where([
-                "is_seagame_31" => 2,
+                "is_graduation_31" => 2,
                 "event_id" => $request->event_id
             ])->first();
             if($record)
@@ -737,11 +737,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $competitor['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => $competitor['final_score'],
@@ -755,11 +755,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $competitor['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => $competitor['final_score'],
@@ -850,11 +850,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $competitor['name']." - ".$competitor['team']['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => $competitor['final_score'],
@@ -868,11 +868,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $competitor['name']." - ".$competitor['team']['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => $competitor['final_score'],
@@ -1024,7 +1024,7 @@ class MatchRoundController extends ApiResourceController
                 ]
             );
             $record = Record::query()->where([
-                "is_seagame_31" => 2,
+                "is_graduation_31" => 2,
                 "event_id" => $request->event_id
             ])->first();
             if($record)
@@ -1079,11 +1079,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $member['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => 0,
@@ -1098,11 +1098,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $member['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => $member['finalScore'],
@@ -1199,11 +1199,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $member['name']." - ".$member['team']['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => 0,
@@ -1218,11 +1218,11 @@ class MatchRoundController extends ApiResourceController
                             Record::updateOrCreate(
                                 [
                                     'event_id' => $request->event_id,
-                                    'is_seagame_31' => 2,
+                                    'is_graduation_31' => 2,
                                 ],
                                 [
                                     'taker_name' => $member['name']." - ".$member['team']['name'],
-                                    'take_place' => "Seagame 31 - Vietnam",
+                                    'take_place' => "graduation 31 - Vietnam",
                                     'unit' => $request->unit,
                                     'take_time' => date("Y-m-d"),
                                     'result_record' => $member['finalScore'],
@@ -1347,7 +1347,7 @@ class MatchRoundController extends ApiResourceController
                 ]
             );
             $record = Record::query()->where([
-                "is_seagame_31" => 2,
+                "is_graduation_31" => 2,
                 "event_id" => $request->event_id
             ])->first();
             if($record)
@@ -1401,11 +1401,11 @@ class MatchRoundController extends ApiResourceController
                         Record::updateOrCreate(
                             [
                                 'event_id' => $request->event_id,
-                                'is_seagame_31' => 2,
+                                'is_graduation_31' => 2,
                             ],
                             [
                                 'taker_name' => $competitor['name'],
-                                'take_place' => "Seagame 31 - Vietnam",
+                                'take_place' => "graduation 31 - Vietnam",
                                 'unit' => $request->unit,
                                 'take_time' => date("Y-m-d"),
                                 'result_record' => $competitor['score'],
@@ -1500,11 +1500,11 @@ class MatchRoundController extends ApiResourceController
                         Record::updateOrCreate(
                             [
                                 'event_id' => $request->event_id,
-                                'is_seagame_31' => 2,
+                                'is_graduation_31' => 2,
                             ],
                             [
                                 'taker_name' => $competitor['name']." - ".$competitor['team']['name'],
-                                'take_place' => "Seagame 31 - Vietnam",
+                                'take_place' => "graduation 31 - Vietnam",
                                 'unit' => $request->unit,
                                 'take_time' => date("Y-m-d"),
                                 'result_record' => $competitor['score'],

@@ -6,7 +6,7 @@
         <link rel="icon" href={{url("assets/images/favicon/favicon.ico")}} type="image/x-icon"/>
         <meta http-equiv="Pragma" content="no-cache" />
 	    <meta http-equiv="Expires" content="0" />
-        <title>31St SEA Games</title>
+        <title>Hệ thống quản lý đại hội thể thao</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;600&display=swap" rel="stylesheet">

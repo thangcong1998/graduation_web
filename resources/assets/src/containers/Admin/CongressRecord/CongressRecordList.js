@@ -17,7 +17,6 @@ export default function RecordList(props) {
     const initialParams = {
         per_page: 50,
         page: 1,
-        is_seagame: 2,
     };
     const endpoint = "/admin/congressRecord";
     const history = useHistory();

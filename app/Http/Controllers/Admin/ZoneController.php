@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Lang;
-use App\Helpers\SyncDataSeagameGms;
 
 class ZoneController extends ApiResourceController
 {
@@ -178,33 +177,6 @@ class ZoneController extends ApiResourceController
 
         if ($request->trashed) {
             $this->query->onlyTrashed();
-        }
-    }
-    public function syncData()
-    {
-        $syncData = new SyncDataSeagameGms();
-        $menthod = "GET";
-        $endpoint = "zone";
-        $params = null;
-        $data = $syncData->syncdata($menthod, $endpoint, $params);
-        $zone = $data->data;
-        // return $zone;
-        Zone::query()->forceDelete();
-        DB::beginTransaction();
-        try {
-            foreach ($zone as $dt) {
-                // return response()->json($dt);
-                Zone::insert([
-                    'id' => $dt->id,
-                    'name' => $dt->name,
-                    'icon_url' => $dt->icon_url,
-                ]);
-            }
-            DB::commit();
-            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);
-        } catch (\Exception $e) {
-            throw  $e;
-            $this->errorResponseSystem();
         }
     }
 }

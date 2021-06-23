@@ -95,15 +95,7 @@ export default function (props) {
                     ),
                 sort: false,
             },
-            {
-                field: "is_seagame",
-                title: t("record_screen.is_seagame"),
-                render: (row) => {
-                    return CheckRecord(row.is_seagame, t);
-                },
-                display: true,
-                sort: false,
-            },
+            
             {
                 field: "is_asiad",
                 title: t("record_screen.is_asiad"),

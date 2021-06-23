@@ -322,9 +322,9 @@ export default function MedalRankings({}) {
                           }}
                         >
                           <Grid>{e?.rank_no}</Grid>
-                          <IconButton onClick={() => editRank(e?.team?.id)}>
+                          {/* <IconButton onClick={() => editRank(e?.team?.id)}>
                             <EditIcon />
-                          </IconButton>
+                          </IconButton> */}
                         </Grid>
                       )}
                     </Grid>
@@ -404,13 +404,13 @@ export default function MedalRankings({}) {
                       ) : (
                         <Grid item xs={12} className={classes.editMedal}>
                           <Grid>{e?.gold_medal ? e?.gold_medal : 0}</Grid>
-                          <Grid>
+                          {/* <Grid>
                             <IconButton
                               onClick={() => editGoldMedal(e?.team?.id)}
                             >
                               <EditIcon />
                             </IconButton>
-                          </Grid>
+                          </Grid> */}
                         </Grid>
                       )}
                     </Grid>
@@ -460,13 +460,13 @@ export default function MedalRankings({}) {
                       ) : (
                         <Grid item xs={12} className={classes.editMedal}>
                           <Grid>{e?.silver_medal ? e?.silver_medal : 0}</Grid>
-                          <Grid>
+                          {/* <Grid>
                             <IconButton
                               onClick={() => editSilverMedal(e?.team?.id)}
                             >
                               <EditIcon />
                             </IconButton>
-                          </Grid>
+                          </Grid> */}
                         </Grid>
                       )}
                     </Grid>
@@ -517,11 +517,11 @@ export default function MedalRankings({}) {
                         <Grid item xs={12} className={classes.editMedal}>
                           <Grid>{e?.bronze_medal ? e?.bronze_medal : 0}</Grid>
                           <Grid>
-                            <IconButton
+                            {/* <IconButton
                               onClick={() => editBronzeMedal(e?.team?.id)}
                             >
                               <EditIcon />
-                            </IconButton>
+                            </IconButton> */}
                           </Grid>
                         </Grid>
                       )}
@@ -536,7 +536,7 @@ export default function MedalRankings({}) {
           </TableBody>
         </Table>
       </TableContainer>
-      <div style={{ padding: 10 }}>
+      {/* <div style={{ padding: 10 }}>
         <Button
           variant="contained"
           color="primary"
@@ -546,7 +546,7 @@ export default function MedalRankings({}) {
         >
           {t("button.update")}
         </Button>
-      </div>
+      </div> */}
     </Paper>
   );
 }

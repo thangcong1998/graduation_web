@@ -19,8 +19,6 @@ use function Symfony\Component\String\s;
 use App\Http\Requests\TeamUpdateRequest;
 use App\Exports\DataExport;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Helpers\SyncDataSeagameGms;
-use Illuminate\Support\Facades\Lang;
 
 class TeamController extends ApiResourceController
 {
@@ -193,34 +191,5 @@ class TeamController extends ApiResourceController
             $team->forceDelete();
         }
         return $this->deleteResultResponse($team);
-    }
-    public function syncData(Request $request)
-    {
-        $syncData = new SyncDataSeagameGms();
-        $method = "GET";
-        $endpoint = "team";
-        $params = ["per_page" => 10000];
-        $data =   $syncData->syncdata($method, $endpoint, $params);
-        $team = $data->data;
-        // return $team;
-        Team::query()->forceDelete();
-        DB::beginTransaction();
-        try {
-            foreach ($team as $dt) {
-                // return response()->json($dt);
-                Team::insert([
-                    'id' => $dt->id,
-                    'country_id' => $dt->country_id,
-                    'name' => $dt->name,
-                    'english_name' => $dt->english_name,
-                    'is_sport_team' => $dt->is_sport_team,
-                ]);
-            }
-            DB::commit();
-            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);
-        } catch (\Exception $e) {
-            throw  $e;
-            $this->errorResponseSystem();
-        }
     }
 }

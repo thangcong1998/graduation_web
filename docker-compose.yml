@@ -35,8 +35,8 @@ services:
       #- ./docker/mysql/logs:/var/log/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
     environment:
-      - MYSQL_DATABASE=seagame-info
-      - MYSQL_USER=seagame-info
+      - MYSQL_DATABASE=graduation
+      - MYSQL_USER=graduation
       - MYSQL_PASSWORD=1
       - MYSQL_ROOT_PASSWORD=1111
       - TZ=Asia/Ho_Chi_Minh

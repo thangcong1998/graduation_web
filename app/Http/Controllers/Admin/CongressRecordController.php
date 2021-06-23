@@ -17,11 +17,6 @@ use App\Http\Requests\RecordUpdateRequest;
 
 class CongressRecordController extends ApiResourceController
 {
-    public function __construct()
-    {
-        parent::__construct();
-        $this->query->where("is_seagame", 2);
-    }
     public function setModel()
     {
         $this->model = new CongressRecord();

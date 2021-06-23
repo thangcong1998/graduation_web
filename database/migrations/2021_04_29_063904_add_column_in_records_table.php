@@ -14,7 +14,7 @@ class AddColumnInRecordsTable extends Migration
     public function up()
     {
         Schema::table('records', function (Blueprint $table) {
-            $table->tinyInteger('is_seagame_31')->default(1);
+            $table->tinyInteger('is_graduation_31')->default(1);
         });
     }
 
@@ -26,7 +26,7 @@ class AddColumnInRecordsTable extends Migration
     public function down()
     {
         Schema::table('records', function (Blueprint $table) {
-            $table->dropColumn('is_seagame_31');
+            $table->dropColumn('is_graduation_31');
         });
     }
 }

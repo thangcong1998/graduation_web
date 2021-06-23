@@ -27,7 +27,6 @@ export default function (props) {
             unit: null,
             sport: null,
             sport_discipline: null,
-            is_seagame: 2,
         },
         onSubmit: async (values) => {
             try {
@@ -39,7 +38,6 @@ export default function (props) {
                     "country_id",
                     values?.country ? values?.country?.id : ""
                 );
-                formData.append("is_seagame", 2);
                 formData.append(
                     "take_place",
                     values?.take_place ? values?.take_place : ""

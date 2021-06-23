@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Exports\DataExport;
-use App\Helpers\SyncDataSeagameGms;
 use App\Http\Controllers\Controller;
 use App\Jobs\PersonalCardJob;
 use App\Jobs\StaffCardJob;
@@ -183,33 +182,6 @@ class AreaController extends ApiResourceController
 
         if ($request->trashed) {
             $this->query->onlyTrashed();
-        }
-    }
-    public function syncData()
-    {
-        $syncData = new SyncDataSeagameGms();
-        $menthod = "GET";
-        $endpoint = "area";
-        $params = null;
-        $data = $syncData->syncdata($menthod, $endpoint, $params);
-        $area = $data->data;
-        // return $area;
-        Area::query()->forceDelete();
-        DB::beginTransaction();
-        try {
-            foreach ($area as $dt) {
-                // return response()->json($dt);
-                Area::insert([
-                    'id' => $dt->id,
-                    'name' => $dt->name,
-                    'icon_url' => $dt->icon_url,
-                ]);
-            }
-            DB::commit();
-            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);
-        } catch (\Exception $e) {
-            throw  $e;
-            $this->errorResponseSystem();
         }
     }
 }

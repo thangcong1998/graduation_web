@@ -129,11 +129,6 @@ const Layout = React.memo((props) => {
           label: t("sidebar.display_setting"),
           perm: "setting_all",
         },
-        {
-          path: "/auditSyncData",
-          label: t("sidebar.audit_sync_data"),
-          perm: "audit_all",
-        },
       ],
     },
     {
@@ -182,11 +177,6 @@ const Layout = React.memo((props) => {
           path: "/foul",
           label: t("sidebar.foul"),
           perm: "foul_all",
-        },
-        {
-          path: "/syncDataSetting",
-          label: t("sidebar.sync_data_setting"),
-          perm: "sync_data_all",
         },
       ],
     },
@@ -270,12 +260,6 @@ const Layout = React.memo((props) => {
       path: "/medalTable",
       perm: "medal_table_all",
     },
-    {
-      label: t("report_screen.report"),
-      icon: <img src={report} height="24px" width="24px" />,
-      path: "/report",
-      perm: ""
-    }
   ];
 
   const crumbs = useMemo(() => {

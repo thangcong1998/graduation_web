@@ -18,7 +18,7 @@ class CreateTableRecords extends Migration
             $table->unsignedBigInteger('event_id');
             $table->unsignedBigInteger('country_id')->nullable();
             $table->foreign('country_id')->references('id')->on('m_countries')->onDelete("cascade");
-            $table->tinyInteger('is_seagame')->default(2);
+            $table->tinyInteger('is_graduation')->default(2);
             $table->tinyInteger('is_asiad')->default(1);
             $table->tinyInteger('is_olympic')->default(1);
             $table->string('taker_name')->nullable();

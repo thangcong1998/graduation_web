@@ -14,7 +14,7 @@ class AddNullableForMatchScoreType extends Migration
     public function up()
     {
         //
-        DB::statement("ALTER TABLE `seagame-info`.`stages`
+        DB::statement("ALTER TABLE `graduation-info`.`stages`
        CHANGE COLUMN `match_score_type` `match_score_type` TINYINT(3) UNSIGNED NULL
        ");
     }

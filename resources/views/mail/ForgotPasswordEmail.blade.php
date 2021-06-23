@@ -8,7 +8,7 @@
 <body>
     <h2 style="text-align: center">Xin chào: {{$email_data['name']}}</h2>
     <br><br>
-    <h4>Chúng tôi nhận được yêu cầu lấy lại mật khẩu của bạn trên Seagame.</h4>
+    <h4>Chúng tôi nhận được yêu cầu lấy lại mật khẩu của bạn trên Hệ thống thể thao.</h4>
     <h4><b>Mật khẩu của bạn được đặt lại là {{$email_data['password']}}</b></h4>
     <a href="{{env('APP_REACT_URL')}}/resetPassword/{{$email_data['password']}}/{{$email_data['user_name']}}">
         <h4>Xác nhận đặt lại mật khẩu</h4>

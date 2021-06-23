@@ -8,8 +8,6 @@ use App\Http\Controllers\Controller;
 use App\Jobs\PersonalCardJob;
 use App\Jobs\StaffCardJob;
 use App\Models\VehicleFunctionRelation;
-use App\Models\Zone;
-use App\Models\ZoneFunctionRelation;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Http\Requests\VehicleCreateRequest;
@@ -17,8 +15,6 @@ use App\Http\Requests\VehicleUpdateRequest;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Lang;
-use App\Helpers\SyncDataSeagameGms;
 
 class VehicleController extends ApiResourceController
 {
@@ -72,22 +68,6 @@ class VehicleController extends ApiResourceController
         $item->fill($data);
 
         $result = $item->update();
-        //        if (count($functions)) {
-        //            foreach ($functions as $function) {
-        //                $staffs = $function['staffs'];
-        //                if(count($staffs) > 0) {
-        //                    StaffCardJob::dispatch($staffs);
-        //                }
-        //                $members = $function->members;
-        //                if(count($members) > 0) {
-        //                    PersonalCardJob::dispatch($members);
-        //                }
-        //                $volunteers = $function->volunteers;
-        //                if(count($volunteers) > 0) {
-        //                    PersonalCardJob::dispatch($volunteers);
-        //                }
-        //            }
-        //        }
         return $this->resultResponse($result);
     }
     public function destroy(Request $request, $id)
@@ -183,33 +163,6 @@ class VehicleController extends ApiResourceController
 
         if ($request->trashed) {
             $this->query->onlyTrashed();
-        }
-    }
-    public function syncData()
-    {
-        $syncData = new SyncDataSeagameGms();
-        $menthod = "GET";
-        $endpoint = "vehicle";
-        $params = null;
-        $data = $syncData->syncdata($menthod, $endpoint, $params);
-        $vehicle = $data->data;
-        // return $vehicle;
-        Vehicle::query()->forceDelete();
-        DB::beginTransaction();
-        try {
-            foreach ($vehicle as $dt) {
-                // return response()->json($dt);
-                Vehicle::insert([
-                    'id' => $dt->id,
-                    'name' => $dt->name,
-                    'icon_url' => $dt->icon_url,
-                ]);
-            }
-            DB::commit();
-            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);
-        } catch (\Exception $e) {
-            throw  $e;
-            $this->errorResponseSystem();
         }
     }
 }

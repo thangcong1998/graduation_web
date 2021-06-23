@@ -194,28 +194,6 @@ export default function RegistrationList(props) {
                 >
                     {t("member_screen.register_member")}
                 </Button>
-                <Button
-                    style={{
-                        color: "#ffffff",
-                    }}
-                    color="primary"
-                    variant="contained"
-                    onClick={() => {
-                        history.push("/registration/create_office");
-                    }}
-                    startIcon={<GetAppIcon />}
-                >
-                    {t("member_screen.member_office")}
-                </Button>
-                <Button
-                    color="primary"
-                    variant="contained"
-                    onClick={() => {
-                        history.push("/registration/importMember");
-                    }}
-                >
-                    <ImportExportIcon /> Import excel
-                </Button>
             </ButtonGroup>
         </ButtonGroup>
     );
@@ -384,11 +362,9 @@ export default function RegistrationList(props) {
             <Paper style={{ padding: "5px 10px 10px 10px" }}>
                 <TableToolbar
                     addButton={{
-                        render: checkPerm(perms, "register_management_add") ? (
+                        render: (
                             GroupButton
-                        ) : (
-                            <div></div>
-                        ),
+                        ) 
                     }}
                     endpoint={"/admin/exportMember"}
                     nameFileExport={"Member"}
@@ -404,37 +380,6 @@ export default function RegistrationList(props) {
                     }}
                     showDelete={checkPerm(perms, "register_management_delete")}
                 />
-
-                {checked?.length > 0 && (
-                    <div style={{ marginBottom: 10 }}>
-                        <ButtonGroup variant="contained">
-                            <Button
-                                color="primary"
-                                onClick={() => decided(profile_status.APPROVAL)}
-                                startIcon={<DoneIcon />}
-                            >
-                                {t("member_registration.approve")}
-                            </Button>
-                            <Button
-                                color="secondary"
-                                onClick={() => decided(profile_status.REJECT)}
-                                startIcon={<ClearIcon />}
-                            >
-                                {t("member_registration.reject")}
-                            </Button>
-                            <ButtonDownloadCard
-                                style={{
-                                    backgroundColor: color.success,
-                                    color: "#fff",
-                                }}
-                                variant="contained"
-                                onClick={() => processing()}
-                            >
-                                {t("member_registration.download_pdf")}
-                            </ButtonDownloadCard>
-                        </ButtonGroup>
-                    </div>
-                )}
                 <DataTable
                     data={data?.data}
                     columns={[
@@ -537,29 +482,6 @@ export default function RegistrationList(props) {
                         endpoint: endpoint,
                         trashed: params?.only_trashed,
                         refetch: refetch,
-                        render: (row) => {
-                            return (
-                                <React.Fragment>
-                                    {row?.approval_status === 2 && (
-                                        <React.Fragment>
-                                            <ButtonIconDownloadCard
-                                                className={classes.actionColumn}
-                                                onClick={() =>
-                                                    downloadCard(row)
-                                                }
-                                            />
-                                        </React.Fragment>
-                                    )}
-                                    <IconButton
-                                        className={classes.actionColumn}
-                                        title={t("title.attach_file")}
-                                        onClick={() => showAttachFile(row)}
-                                    >
-                                        <AttachFileIcon />
-                                    </IconButton>
-                                </React.Fragment>
-                            );
-                        },
                     }}
                     checked={checked}
                     onCheck={setChecked}

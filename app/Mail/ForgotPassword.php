@@ -36,6 +36,6 @@ class ForgotPassword extends Mailable
 
         $info = Setting::query()->first();
 
-        return $this->from('vuduysm97@gmail.com', 'Seagame')->subject('Lấy lại mật khẩu')->view('mail.ForgotPasswordEmail', ['email_data' => $this->email_data]);
+        return $this->from('congv920@gmail.com', 'Hệ thống thể thao')->subject('Lấy lại mật khẩu')->view('mail.ForgotPasswordEmail', ['email_data' => $this->email_data]);
     }
 }

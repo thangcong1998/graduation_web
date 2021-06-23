@@ -5,7 +5,7 @@ namespace App\Helpers;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 
-class SyncDataSeagameGms
+class SyncDatagraduationGms
 {
     public function syncdata($method, $api_url, $params)
     {
@@ -13,7 +13,7 @@ class SyncDataSeagameGms
 
         $res = $client->request('POST', 'http://dev1.solashi.com:2288/api/login', [
             "json" => [
-                'user_name' => 'admin_seagame',
+                'user_name' => 'thanhcong',
                 'password' => 'Admin@123',
             ],
         ]);

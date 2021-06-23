@@ -47,7 +47,7 @@ class MailConfigServiceProvider extends ServiceProvider
                     'driver'     => 'smtp',
                     'host'       => $mail->host,
                     'port'       => $mail->port,
-                    'from'       => array('address' => $mail->email, 'name' => 'Seagame'),
+                    'from'       => array('address' => $mail->email, 'name' => 'Hệ thống thể thao'),
                     'username'   => $mail->email,
                     'password'   => $mail->password,
                     'encryption' => 'tls',

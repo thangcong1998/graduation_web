@@ -11,9 +11,6 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CountryCreateRequest;
 use App\Http\Requests\CountryUpdateRequest;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Helpers\SyncDataSeagameGms;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\DB;
 
 class CountryController extends ApiResourceController
 {
@@ -111,35 +108,5 @@ class CountryController extends ApiResourceController
 
     private function _filter(Request $request)
     {
-    }
-    public function syncData()
-    {
-        $request = request();
-        $syncData = new SyncDataSeagameGms();
-        $method = "GET";
-        $api_url = $request->api_url;
-        $params = ["per_page" => 10000];
-        $data =   $syncData->syncdata($method, $api_url, $params);
-        $country = $data->data;
-        // return $country;
-        Country::query()->forceDelete();
-        DB::beginTransaction();
-        try {
-            foreach ($country as $dt) {
-                // return response()->json($dt);
-                Country::insert([
-                    'id' => $dt->id,
-                    'country_code_3_digits' => $dt->country_code_3_digits,
-                    'name' => $dt->name,
-                    'flag_url' => $dt->flag_url,
-
-                ]);
-            }
-            DB::commit();
-            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);
-        } catch (\Exception $e) {
-            throw  $e;
-            $this->errorResponseSystem();
-        }
     }
 }

@@ -1,11 +1,9 @@
 <h2>Installation</h2>
 <hr />
-Clone the repo
 Copy .env.example to .env
 
 Configure .env
 
-cd to the repo
 Run composer install
 Run composer require awobaz/compoships
 Run composer require doctrine/dbal:2.9
@@ -20,4 +18,6 @@ Run npm install
 
 Run npm run watch
 
-Or npm run dev
+Or npm run dev 
+
+Or npm run prod
