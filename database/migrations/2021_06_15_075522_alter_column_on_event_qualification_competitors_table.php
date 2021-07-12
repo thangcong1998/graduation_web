@@ -15,10 +15,10 @@ class AlterColumnOnEventQualificationCompetitorsTable extends Migration
     public function up()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
-        DB::statement("ALTER TABLE " . env('DB_DATABASE') . ".`event_qualification_competitors`
+        DB::statement("ALTER TABLE `event_qualification_competitors`
         CHANGE COLUMN `participant_id` `participant_id` BIGINT(20) UNSIGNED NULL
         ");
-        DB::statement("ALTER TABLE " . env('DB_DATABASE') . ".`event_qualification_competitors`
+        DB::statement("ALTER TABLE `event_qualification_competitors`
           CHANGE COLUMN `event_team_id` `event_team_id` BIGINT(20) UNSIGNED NULL
           ");
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');

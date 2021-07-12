@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'Admin\UserController@authenticate')->name('login')->middleware('language');
 Route::post('forgotPassword', 'Admin\UserController@forgotPassword')->middleware('language');
+Route::post('setNewPassword', 'Admin\UserController@setNewPassword')->middleware('language');
 Route::get('changeLang', 'SettingController@changeLang');
 Route::middleware(['auth:api', 'language'])->group(function () {
   Route::middleware(['auth:api'])->group(function () {
@@ -129,7 +130,10 @@ Route::namespace('Admin')->prefix('admin')->group(function () {
     Route::post('target_record_1_vs_n', 'MatchRoundController@TargetRecord1vsN');
     Route::post('lineCompetitor', 'PositionEventFieldController@storeLine');
     Route::get('exportStage', 'StageController@exportData');
+    // xóa nhiều
     Route::post('bulkDelete/role', 'RoleController@bulkDelete');
+    Route::post('bulkDelete/team', 'TeamController@bulkDelete');
+
 
     //---- Sync data setting -------
     Route::apiResource('syncDataSetting', 'SyncDataController');

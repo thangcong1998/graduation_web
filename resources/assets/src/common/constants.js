@@ -345,6 +345,9 @@ export function RenderModel(model, tran) {
     case "App\\Models\\Referee":
       return tran("sidebar.referee");
       break;
+    case "App\\Models\\Country":
+      return tran("sidebar.country");
+      break;
     default:
       return model;
       break;

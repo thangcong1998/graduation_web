@@ -23,6 +23,7 @@ export default function (props) {
     params?.id ? "get" : null,
     params?.id ? "admin/team/" + params.id : null,
   ]);
+  console.log({ params });
   const formik = useFormik({
     initialValues: {
       name: null,
@@ -190,7 +191,8 @@ export default function (props) {
         <div style={{ width: "50%" }}>
           <h3 style={{ padding: 10 }}>{t("team_screen.team_info")}</h3>
         </div>
-        <div style={{ width: "50%" }}>
+        {/*  đông bộ dữ liệu */}
+        {/* <div style={{ width: "50%" }}>
           {checkPerm(perms, "team_edit") ? (
             <Button
               variant={"contained"}
@@ -201,7 +203,7 @@ export default function (props) {
               <SyncIcon /> {t("team_screen.sync")}
             </Button>
           ) : null}
-        </div>
+        </div> */}
       </div>
       <Forms inputs={inputs} />
 

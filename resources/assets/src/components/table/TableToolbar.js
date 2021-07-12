@@ -49,8 +49,8 @@ export default function TableToolbar(props) {
     popover,
     noneColumns,
     showUniform,
-      endpointUniform,
-      showExport
+    endpointUniform,
+    showExport,
   } = props;
 
   const classes = useStyles();
@@ -157,7 +157,8 @@ export default function TableToolbar(props) {
           <div></div>
         )}
         <div style={{ display: "flex" }}>
-          {checked?.length > 0 && showExport !== false && (
+          {/*xuat excel */}
+          {/* {checked?.length > 0 && showExport !== false && (
             <IconButton
               title={t("toolbar.export")}
               onClick={() => {
@@ -166,7 +167,7 @@ export default function TableToolbar(props) {
             >
               <GetAppIcon />
             </IconButton>
-          )}
+          )} */}
           {checked?.length > 0 && showDelete === true && (
             <IconButton
               title={t("toolbar.delete_list")}
@@ -178,14 +179,14 @@ export default function TableToolbar(props) {
             </IconButton>
           )}
           {checked?.length > 0 && showUniform === true && (
-              <IconButton
-                  title={t("toolbar.uniform")}
-                  onClick={() => {
-                    uniformCheck(checked);
-                  }}
-              >
-                <img src={Shirt} alt={""} width={24} height={24}/>
-              </IconButton>
+            <IconButton
+              title={t("toolbar.uniform")}
+              onClick={() => {
+                uniformCheck(checked);
+              }}
+            >
+              <img src={Shirt} alt={""} width={24} height={24} />
+            </IconButton>
           )}
           {/* filter */}
           {popover ? (

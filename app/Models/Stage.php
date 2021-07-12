@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Stage extends Model
 {
     protected $table = "stages";
-    protected $fillable = ['event_id', 'name', 'english_name', 'match_score_type', 'round_result_type',
-    'match_turn_num','stage_type', 'match_turn_num', 'match_scoring_method', 'unit', 'rank_type', 'sort_type', 'round_type', 'match_game_num'];
+    protected $fillable = [
+        'event_id', 'name', 'english_name', 'match_score_type', 'round_result_type',
+        'match_turn_num', 'stage_type', 'match_turn_num', 'match_scoring_method', 'unit', 'rank_type', 'sort_type', 'round_type', 'match_game_num'
+    ];
 
     const match_attendant_type = [
         '1VS1' => 1,
@@ -109,6 +111,10 @@ class Stage extends Model
     {
         return $this->hasOne(QualificationSetting::class, 'qualified_to_stage_id', 'id');
     }
+    public function per_stage()
+    {
+        return $this->belongsToMany(Stage::class, 'stage_qualification_settings', 'qualified_to_stage_id', 'stage_id');
+    }
     public function next_stage()
     {
         return $this->belongsToMany(Stage::class, 'stage_qualification_settings', 'stage_id', 'qualified_to_stage_id');
@@ -133,7 +139,7 @@ class Stage extends Model
     }
     public function fouls()
     {
-        return $this->hasMany(Foul::class,"event_id","event_id");
+        return $this->hasMany(Foul::class, "event_id", "event_id");
     }
     public function sub_criterias()
     {

@@ -10,7 +10,6 @@ function useFetch(key, options) {
     shouldRetryOnError: false,
     ...options,
   });
-
   return { data, error, revalidate, loading, cancel };
 }
 

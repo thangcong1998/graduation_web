@@ -21,7 +21,7 @@ class CreateCompetitorVenuesTable extends Migration
             $table->string('address');
             $table->string('latitude');
             $table->string('longtitude');
-            $table->text('html');
+            $table->text('html')->nullable();
             $table->tinyInteger('practise_flag')->nullable();
             $table->tinyInteger('competition_flag')->nullable();
             $table->timestamps();

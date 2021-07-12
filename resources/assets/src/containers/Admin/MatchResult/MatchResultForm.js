@@ -105,7 +105,7 @@ export default function MatchResultForm() {
             borderTopLeftRadius: "10px",
             borderTopRightRadius: "10px",
             backgroundImage: `url(${stadium})`,
-            backgroundSize: "cover"
+            backgroundSize: "cover",
           }}
         >
           <div
@@ -233,18 +233,18 @@ export default function MatchResultForm() {
             >
               <Grid container spacing={3}>
                 <Grid item xs={3}>
-                    {match?.stage?.event?.sport_discipline?.icon && (
-                        <img
-                            src={
-                                process.env.MIX_REACT_APP_STORAGE_URL +
-                                "/" +
-                                match?.stage?.event?.sport_discipline?.icon
-                            }
-                            width={"50px"}
-                            height={"auto"}
-                            style={{ float: "right" }}
-                        />
-                    )}
+                  {match?.stage?.event?.sport_discipline?.icon && (
+                    <img
+                      src={
+                        process.env.MIX_REACT_APP_STORAGE_URL +
+                        "/" +
+                        match?.stage?.event?.sport_discipline?.icon
+                      }
+                      width={"50px"}
+                      height={"auto"}
+                      style={{ float: "right" }}
+                    />
+                  )}
                 </Grid>
                 <Grid
                   item
@@ -280,30 +280,38 @@ export default function MatchResultForm() {
                   </h2>
                 </Grid>
                 <Grid item xs={3}>
-                    {match?.stage?.event?.icon && (
-                        <img
-                            src={
-                                process.env.MIX_REACT_APP_STORAGE_URL +
-                                "/" +
-                                match?.stage?.event?.icon
-                            }
-                            width={"40px"}
-                            height={"auto"}
-                            style={{ float: "left" }}
-                        />
-                    )}
+                  {match?.stage?.event?.icon && (
+                    <img
+                      src={
+                        process.env.MIX_REACT_APP_STORAGE_URL +
+                        "/" +
+                        match?.stage?.event?.icon
+                      }
+                      width={"40px"}
+                      height={"auto"}
+                      style={{ float: "left" }}
+                    />
+                  )}
                 </Grid>
               </Grid>
             </div>
           </div>
-          <Grid container spacing={0} style={{ height: '100%', maxHeight: '80px'}}>
-            <Grid item xs={3} style={{ padding: "5px 1px 0px 2px", height: '100%' }}>
+          <Grid
+            container
+            spacing={0}
+            style={{ height: "100%", maxHeight: "80px" }}
+          >
+            <Grid
+              item
+              xs={3}
+              style={{ padding: "5px 1px 0px 2px", height: "100%" }}
+            >
               <div
                 className={
                   tab === 1 ? classes.tab_select : classes.tab_not_select
                 }
                 onClick={() => setTab(1)}
-                style={{ height: '100%'}}
+                style={{ height: "100%" }}
               >
                 <p
                   style={{
@@ -316,13 +324,17 @@ export default function MatchResultForm() {
                 </p>
               </div>
             </Grid>
-            <Grid item xs={3} style={{ padding: "5px 1px 0px 1px", height: '100%' }}>
+            <Grid
+              item
+              xs={3}
+              style={{ padding: "5px 1px 0px 1px", height: "100%" }}
+            >
               <div
                 className={
                   tab === 2 ? classes.tab_select : classes.tab_not_select
                 }
                 onClick={() => setTab(2)}
-                style={{ height: '100%'}}
+                style={{ height: "100%" }}
               >
                 <p
                   style={{
@@ -335,13 +347,17 @@ export default function MatchResultForm() {
                 </p>
               </div>
             </Grid>
-            <Grid item xs={3} style={{ padding: "5px 1px 0px 1px", height: '100%' }}>
+            <Grid
+              item
+              xs={3}
+              style={{ padding: "5px 1px 0px 1px", height: "100%" }}
+            >
               <div
                 className={
                   tab === 3 ? classes.tab_select : classes.tab_not_select
                 }
                 onClick={() => setTab(3)}
-                style={{ height: '100%'}}
+                style={{ height: "100%" }}
               >
                 <p
                   style={{
@@ -354,13 +370,17 @@ export default function MatchResultForm() {
                 </p>
               </div>
             </Grid>
-            <Grid item xs={3} style={{ padding: "5px 2px 0px 1px" , height: '100%'}}>
+            <Grid
+              item
+              xs={3}
+              style={{ padding: "5px 2px 0px 1px", height: "100%" }}
+            >
               <div
                 className={
                   tab === 4 ? classes.tab_select : classes.tab_not_select
                 }
                 onClick={() => setTab(4)}
-                style={{ height: '100%'}}
+                style={{ height: "100%" }}
               >
                 <p
                   style={{

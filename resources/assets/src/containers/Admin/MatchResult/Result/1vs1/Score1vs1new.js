@@ -197,7 +197,7 @@ export default function Score1vs1new({ round, setRound, referee }) {
               if (vlIndex == rlIndex) {
                 return {
                   ...rl,
-                  resultScore: value,
+                  resultScore: value ? value : 0,
                   final_score:
                     e?.is_winner_classification_round == 1 ? value : null,
                 };

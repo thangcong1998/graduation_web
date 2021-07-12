@@ -182,16 +182,16 @@ export default function RefereeForm(props) {
         t("member_registration.nationality") + " " + t("errors.required")
       )
       .nullable(),
-    accreditation_number: Yup.string()
-      .required(
-        t("referee_screen.accreditation_number") + " " + t("errors.required")
-      )
-      .length(
-        10,
-        t("referee_screen.accreditation_number") + " " + t("errors.length_10")
-      )
-      .trim()
-      .nullable(),
+    // accreditation_number: Yup.string()
+    //   .required(
+    //     t("referee_screen.accreditation_number") + " " + t("errors.required")
+    //   )
+    //   .length(
+    //     10,
+    //     t("referee_screen.accreditation_number") + " " + t("errors.length_10")
+    //   )
+    //   .trim()
+    //   .nullable(),
     given_name: Yup.string()
       .required(
         t("member_registration.given_name") + " " + t("errors.required")
@@ -462,10 +462,10 @@ export default function RefereeForm(props) {
       formik.setFieldValue("profile_url", profileImg);
     }
   }, [profileImg]);
-  console.log({ profileImg });
+  console.log(formik?.errors);
   const Information = (
     <div>
-      <Grid className={classes.group}>
+      {/* <Grid className={classes.group}>
         <div className={classes.title}>
           1. {t("referee_screen.accreditation_number")}
         </div>
@@ -486,10 +486,10 @@ export default function RefereeForm(props) {
             />
           </Grid>
         </Grid>
-      </Grid>
+      </Grid> */}
       <Grid className={classes.group}>
         <div className={classes.title}>
-          2. {t("member_registration.group3")}
+          1. {t("member_registration.group3")}
         </div>
         <Grid justify="center" container spacing={1}>
           <Grid item md={6} xs={12}>
@@ -521,7 +521,7 @@ export default function RefereeForm(props) {
       <Grid className={classes.group}>
         {/*  4. Passport no/Số hộ chiếu*/}
         <div className={classes.title}>
-          3. {t("member_registration.group4")}
+          2. {t("member_registration.group4")}
         </div>
         <Grid justify="center" container spacing={1}>
           <Grid item md={6} xs={12}>
@@ -567,7 +567,7 @@ export default function RefereeForm(props) {
       <Grid className={classes.group}>
         {/*  5. Personal Identtity Card No. (Vietnam only)/Số chứng minh thư hoặc thẻ căn cước (CMT/CC)*/}
         <div className={classes.title}>
-          4. {t("member_registration.group5")}
+          3. {t("member_registration.group5")}
         </div>
         <Grid justify="center" container spacing={1}>
           <Grid item md={4} xs={12}>
@@ -633,7 +633,7 @@ export default function RefereeForm(props) {
         <Grid item className={classes.group} md={6} xs={12}>
           {/*  6. Date of birth/Ngày sinh*/}
           <div className={classes.title}>
-            5. {t("member_registration.group9") + "(DD/MM/YYYY) *"}
+            4. {t("member_registration.group9") + "(DD/MM/YYYY) *"}
           </div>
           <DatePicker
             size={"small"}
@@ -656,7 +656,7 @@ export default function RefereeForm(props) {
         <Grid item className={classes.group} md={6} xs={12}>
           {/*  7. sex/Giới tính*/}
           <div className={classes.title}>
-            6. {t("member_registration.group6") + " *"}
+            5. {t("member_registration.group6") + " *"}
           </div>
           <Grid justify="flex-start" container spacing={1}>
             <Radios
@@ -684,7 +684,7 @@ export default function RefereeForm(props) {
         <Grid item className={classes.group} md={6} xs={12}>
           {/*  10. Category of birth/Nơi sinh*/}
           <div className={classes.title}>
-            7. {t("member_registration.group10") + " *"}
+            6. {t("member_registration.group10") + " *"}
           </div>
           <Autocomplete
             label={t("member_registration.country_of_birth")}
@@ -703,7 +703,7 @@ export default function RefereeForm(props) {
         <Grid item className={classes.group} md={6} xs={12}>
           {/*  11. Nationality/Quốc tịch*/}
           <div className={classes.title}>
-            8. {t("member_registration.group11") + " *"}
+            7. {t("member_registration.group11") + " *"}
           </div>
           <Autocomplete
             label={t("member_registration.nationality")}
@@ -722,7 +722,7 @@ export default function RefereeForm(props) {
       <Grid className={classes.group}>
         {/*  13. Permanent Address/Địa chỉ thường trú*/}
         <div className={classes.title}>
-          10. {t("member_registration.group13")}
+          8. {t("member_registration.group13")}
         </div>
         <Grid justify="center" container spacing={1}>
           <Grid item md={12} xs={12}>
@@ -743,10 +743,10 @@ export default function RefereeForm(props) {
         </Grid>
       </Grid>
       <Grid justify="center" container spacing={1}>
-        <Grid item md={6} xs={12} className={classes.group}>
+        <Grid item md={12} xs={12} className={classes.group}>
           {/*  15. Register People Picture */}
           <div className={classes.title}>
-            11. {t("member_registration.group15") + " *"}
+            9. {t("member_registration.group15") + " *"}
           </div>
           <Grid className={classes.note}>
             {t("member_registration.profile_url_note")}
@@ -765,10 +765,10 @@ export default function RefereeForm(props) {
             />
           </Grid>
         </Grid>
-        <Grid item md={6} xs={12} className={classes.group}>
-          {/*  16. Photo copy of valid passport */}
+        {/*  16. Photo copy of valid passport */}
+        {/* <Grid item md={6} xs={12} className={classes.group}>
           <div className={classes.title}>
-            12. {t("member_registration.group16")}
+            9. {t("member_registration.group16")}
           </div>
           <Grid className={classes.note}>
             {t("member_registration.profile_url_note")}
@@ -787,7 +787,7 @@ export default function RefereeForm(props) {
               }
             />
           </Grid>
-        </Grid>
+        </Grid> */}
       </Grid>
     </div>
   );

@@ -35,6 +35,7 @@ const Forms = React.memo(({ inputs, loading, readOnly, variant }) => {
               handleChange,
               error,
               grid,
+              valueComponent,
               ...otherProps
             } = column;
             return otherProps?.display === false ? (
@@ -42,7 +43,7 @@ const Forms = React.memo(({ inputs, loading, readOnly, variant }) => {
             ) : (
               <Grid item {...grid} key={index}>
                 {column.component ? (
-                  <column.component />
+                  <column.component value={value} handleChange={handleChange} />
                 ) : (
                   <Input
                     style={{

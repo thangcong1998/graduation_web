@@ -12,7 +12,7 @@ export default function (props) {
         sort: true,
         render: (row) => (
           <div>
-            {row.icon && (
+            {row?.icon && (
               <img
                 alt=""
                 src={process.env.MIX_REACT_APP_STORAGE_URL + "/" + row?.icon}

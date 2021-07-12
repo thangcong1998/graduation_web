@@ -159,7 +159,7 @@ class PositionEventFieldController extends ApiResourceController
                 }
             }
             foreach($individuals as $individual){
-                if($method_id = EventDistinguishPlayerMethod::method_id['custom'] && $individual['rule'] == null){
+                if($method_id == EventDistinguishPlayerMethod::method_id['custom'] && $individual['rule'] == null){
                     return response()->json(['message' => Lang::get('response.response_message.rule_is_require')], 422);
                 }else{
                     $dt = MatchIndividualCompetitor::updateOrCreate([

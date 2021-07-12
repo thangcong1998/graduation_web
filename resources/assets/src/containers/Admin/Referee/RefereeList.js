@@ -55,12 +55,12 @@ export default function RegistrationList(props) {
   const { filterInputs } = RegistrationInputs();
 
   const columns = [
-    {
-      field: "accreditation_number",
-      title: t("referee_screen.accreditation_number"),
-      display: true,
-      sort: true,
-    },
+    // {
+    //   field: "accreditation_number",
+    //   title: t("referee_screen.accreditation_number"),
+    //   display: true,
+    //   sort: true,
+    // },
     {
       field: "given_name",
       title: t("member_screen.given_name"),

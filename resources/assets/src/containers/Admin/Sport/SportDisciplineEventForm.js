@@ -816,38 +816,38 @@ export default function (props) {
           },
           grid: { xs: 12, sm: 12, md: 12 },
         },
-        {
-          component: () => (
-            <FormControlLabel
-              style={{
-                alignItems: "flex-start",
-                marginLeft: 0,
-                marginBottom: 15,
-              }}
-              value={formik.values?.is_decathlon_heptathlon}
-              control={
-                <Checkbox
-                  style={{ padding: 0 }}
-                  color="primary"
-                  checked={formik.values?.is_decathlon_heptathlon}
-                />
-              }
-              label={
-                <span style={{ overflowWrap: "anywhere" }}>
-                  {t("sport_discipline_event_screen.is_decathlon_heptathlon")}
-                </span>
-              }
-              onChange={(event) => {
-                if (formik.values?.is_decathlon_heptathlon) {
-                  formik.setFieldValue("is_decathlon_heptathlon", 0);
-                } else {
-                  formik.setFieldValue("is_decathlon_heptathlon", 1);
-                }
-              }}
-            />
-          ),
-          grid: { xs: 12, sm: 12, md: 12 },
-        },
+        // {
+        //   component: () => (
+        //     <FormControlLabel
+        //       style={{
+        //         alignItems: "flex-start",
+        //         marginLeft: 0,
+        //         marginBottom: 15,
+        //       }}
+        //       value={formik.values?.is_decathlon_heptathlon}
+        //       control={
+        //         <Checkbox
+        //           style={{ padding: 0 }}
+        //           color="primary"
+        //           checked={formik.values?.is_decathlon_heptathlon}
+        //         />
+        //       }
+        //       label={
+        //         <span style={{ overflowWrap: "anywhere" }}>
+        //           {t("sport_discipline_event_screen.is_decathlon_heptathlon")}
+        //         </span>
+        //       }
+        //       onChange={(event) => {
+        //         if (formik.values?.is_decathlon_heptathlon) {
+        //           formik.setFieldValue("is_decathlon_heptathlon", 0);
+        //         } else {
+        //           formik.setFieldValue("is_decathlon_heptathlon", 1);
+        //         }
+        //       }}
+        //     />
+        //   ),
+        //   grid: { xs: 12, sm: 12, md: 12 },
+        // },
         {
           label: t("sport_discipline_event_screen.match_type"),
           field: "match_type",
@@ -1467,8 +1467,8 @@ export default function (props) {
         {formik?.values?.round_type == round_type.HAS_ROUND && Round}
         {formik?.values?.round_type == round_type.HAS_SET && Set}
 
-        <Forms inputs={player_menthod} />
-        {formik.values?.event_distinguish_player_method ==
+        {/* <Forms inputs={player_menthod} /> */}
+        {/* {formik.values?.event_distinguish_player_method ==
           event_distinguish_player_method.CUSTOM && (
           <div
             style={{
@@ -1486,7 +1486,7 @@ export default function (props) {
             </FormControl>
             {_Rules}
           </div>
-        )}
+        )} */}
         <div style={{ maxWidth: 300 }}>
           <UploadOnePicture
             files={files}

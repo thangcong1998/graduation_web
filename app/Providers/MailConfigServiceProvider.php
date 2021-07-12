@@ -26,7 +26,7 @@ class MailConfigServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function boot()
     {
         //
     }
@@ -36,18 +36,16 @@ class MailConfigServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function register()
     {
-
         if (Schema::hasTable('m_settings')) {
             $mail = DB::table('m_settings')->first();
-            if ($mail) //checking if table is not empty
-            {
+            if ($mail) {
                 $config = array(
                     'driver'     => 'smtp',
                     'host'       => $mail->host,
                     'port'       => $mail->port,
-                    'from'       => array('address' => $mail->email, 'name' => 'Hệ thống thể thao'),
+                    'from'       => array('address' => $mail->email, 'name' => 'Seagame'),
                     'username'   => $mail->email,
                     'password'   => $mail->password,
                     'encryption' => 'tls',

@@ -306,6 +306,7 @@ class StageController extends ApiResourceController
                                 })
                                 ->where('eg.stage_id', $id)
                                 ->selectRaw('
+                                COUNT(IF(mic.id, 1, NULL)) as total_matches,
                                 COUNT(IF(mic.is_winner = 1, 1, NULL)) win,
                                 COUNT(IF(mic.is_winner = 2, 1, NULL)) lose,
                                 COUNT(IF(mic.is_winner = 3, 1, NULL)) draw, 
@@ -335,11 +336,12 @@ class StageController extends ApiResourceController
                                 ->where('eg.stage_id', $id)
                                 ->selectRaw(
                                     '
+                                COUNT(IF(met.id, 1, NULL)) as total_matches,
                                 COUNT(IF(met.is_winner = 1, 1, NULL)) win,
                                 COUNT(IF(met.is_winner = 2, 1, NULL)) lose,
                                 COUNT(IF(met.is_winner = 3, 1, NULL)) draw, 
                                 event_group_member.event_group_id, 
-                                met.event_team_id, 
+                                event_group_member.event_team_id,
                                 COALESCE(sum(met.match_point),0) as score,
                                 event_group_member.id'
                                 )
@@ -419,7 +421,6 @@ class StageController extends ApiResourceController
                             switch ($sc['type']) {
                                 case SubCriteria::type['win_match']:
                                     $query->selectRaw('
-                                    COUNT(IF(mic.id, 1, NULL)) as total_matches,
                                     COUNT(IF(mic.is_winner = 1, 1, NULL)) win,
                                     COUNT(IF(mic.is_winner = 2, 1, NULL)) lose,
                                     COUNT(IF(mic.is_winner = 3, 1, NULL)) draw')
@@ -447,7 +448,7 @@ class StageController extends ApiResourceController
                                     break;
                             }
                         }
-                        $query->selectRaw('event_group_member.event_group_id, individual_competitor_id')
+                        $query->selectRaw('COUNT(IF(mic.id, 1, NULL)) as total_matches, event_group_member.event_group_id, individual_competitor_id')
                             ->groupBy('event_group_member.event_group_id', 'individual_competitor_id');
                     }
                     // team
@@ -474,7 +475,6 @@ class StageController extends ApiResourceController
                             switch ($sc['type']) {
                                 case SubCriteria::type['win_match']:
                                     $query->selectRaw('
-                                    COUNT(IF(met.id, 1, NULL)) as total_matches,
                                     COUNT(IF(met.is_winner = 1, 1, NULL)) win,
                                     COUNT(IF(met.is_winner = 2, 1, NULL)) lose,
                                     COUNT(IF(met.is_winner = 3, 1, NULL)) draw')
@@ -502,7 +502,7 @@ class StageController extends ApiResourceController
                                     break;
                             }
                         }
-                        $query->selectRaw('event_group_member.event_group_id, event_group_member.event_team_id')
+                        $query->selectRaw('COUNT(IF(met.id, 1, NULL)) as total_matches, event_group_member.event_group_id, event_group_member.event_team_id')
                             ->groupBy('event_group_member.event_group_id', 'event_group_member.event_team_id');
                     }
                 }
@@ -560,6 +560,7 @@ class StageController extends ApiResourceController
                                 $join->on('mic.competitor_id', '=', 'participants.id');
                             })
                             ->selectRaw('
+                                COUNT(IF(mic.id, 1, NULL)) as total_matches,
                                 COUNT(IF(mic.is_winner = 1, 1, NULL)) win,
                                 COUNT(IF(mic.is_winner = 2, 1, NULL)) lose,
                                 COUNT(IF(mic.is_winner = 3, 1, NULL)) draw, 
@@ -615,7 +616,6 @@ class StageController extends ApiResourceController
                         switch ($sc['type']) {
                             case SubCriteria::type['win_match']:
                                 $query->selectRaw('
-                                COUNT(IF(mic.id, 1, NULL)) as total_matches,
                                 COUNT(IF(mic.is_winner = 1, 1, NULL)) win,
                                 COUNT(IF(mic.is_winner = 2, 1, NULL)) lose,
                                 COUNT(IF(mic.is_winner = 3, 1, NULL)) draw')
@@ -636,7 +636,7 @@ class StageController extends ApiResourceController
                                 $query->selectRaw("
                                         COALESCE((select total_value from stage_sub_criterias_relations as sscr 
                                             where sscr.stage_id = $id
-                                            and sscr.competitor_id = event_group_member.individual_competitor_id
+                                            and sscr.competitor_id = participants.id
                                             and sscr.sub_criteria_id = " . $sc['id'] . "
                                         ),0) as 'val_sub_criteria_" . $sc['id'] . "'
                                     ")->orderBy('val_sub_criteria_' . $sc['id'], 'DESC');
@@ -645,6 +645,7 @@ class StageController extends ApiResourceController
                     }
                     $query->selectRaw(
                         '
+                        COUNT(IF(mic.id, 1, NULL)) as total_matches,
                         participants.id, 
                         participants.team_id, 
                         participants.given_name, 
@@ -676,6 +677,7 @@ class StageController extends ApiResourceController
                                 $join->on('met.competitor_id', '=', 'event_teams.id');
                             })
                             ->selectRaw('
+                                COUNT(IF(met.id, 1, NULL)) as total_matches
                                 COUNT(IF(met.is_winner = 1, 1, NULL)) win,
                                 COUNT(IF(met.is_winner = 2, 1, NULL)) lose,
                                 COUNT(IF(met.is_winner = 3, 1, NULL)) draw, 
@@ -730,7 +732,6 @@ class StageController extends ApiResourceController
                         switch ($sc['type']) {
                             case SubCriteria::type['win_match']:
                                 $query->selectRaw('
-                                COUNT(IF(met.id, 1, NULL)) as total_matches,
                                 COUNT(IF(met.is_winner = 1, 1, NULL)) win,
                                 COUNT(IF(met.is_winner = 2, 1, NULL)) lose,
                                 COUNT(IF(met.is_winner = 3, 1, NULL)) draw')
@@ -751,7 +752,7 @@ class StageController extends ApiResourceController
                                 $query->selectRaw("
                                     COALESCE((select total_value from stage_sub_criterias_relations as sscr 
                                         where sscr.stage_id = $id
-                                        and sscr.event_team_id = event_group_member.event_team_id
+                                        and sscr.event_team_id = event_teams.id
                                         and sscr.sub_criteria_id = " . $sc['id'] . "
                                     ),0) as 'val_sub_criteria_" . $sc['id'] . "'
                                 ")->orderBy('val_sub_criteria_' . $sc['id'], 'DESC');
@@ -759,6 +760,7 @@ class StageController extends ApiResourceController
                         }
                     }
                     $query->selectRaw('
+                        COUNT(IF(met.id, 1, NULL)) as total_matches,
                         event_teams.id,
                         event_teams.team_id, 
                         event_teams.name

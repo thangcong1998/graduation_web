@@ -134,7 +134,7 @@ export default function FunctionReferee(props) {
     temp[index].referee = null;
     setReferFunc(temp);
   };
-
+  console.log({ arrRef });
   return (
     <div>
       <Typography className={classes.typo}>
@@ -203,18 +203,18 @@ export default function FunctionReferee(props) {
             <Table className={classes.table}>
               <TableHead>
                 <TableRow className={classes.rowHeader}>
-                  <TableCell
+                  {/* <TableCell
                     className={classes.tableRe}
                     style={{
                       width: "30%",
                     }}
                   >
                     Ad no
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     className={classes.tableRe}
                     style={{
-                      width: "30%",
+                      width: "50%",
                     }}
                   >
                     {t("member_registration.nationality")}
@@ -222,14 +222,14 @@ export default function FunctionReferee(props) {
                   <TableCell
                     className={classes.tableRe}
                     style={{
-                      width: "40%",
+                      width: "50%",
                     }}
                   >
                     {t("match_result_screen.referee_name")}
                   </TableCell>
                 </TableRow>
                 <TableRow style={{ backgroundColor: "#e8f5e9" }}>
-                  <TableCell
+                  {/* <TableCell
                     className={classes.tableRe}
                     style={{
                       width: "30%",
@@ -253,11 +253,11 @@ export default function FunctionReferee(props) {
                         ),
                       }}
                     />
-                  </TableCell>
+                  </TableCell> */}
                   <TableCell
                     className={classes.tableRe}
                     style={{
-                      width: "30%",
+                      width: "50%",
                     }}
                   >
                     <Autocomplete
@@ -274,7 +274,7 @@ export default function FunctionReferee(props) {
                   <TableCell
                     className={classes.tableRe}
                     style={{
-                      width: "40%",
+                      width: "50%",
                     }}
                   >
                     <TextField
@@ -306,17 +306,17 @@ export default function FunctionReferee(props) {
                         className={classes.row}
                         onClick={() => chooseReferee(val)}
                       >
-                        <TableCell
+                        {/* <TableCell
                           style={{
                             width: "30%",
                           }}
                           className={classes.cell}
                         >
                           {val?.accreditation_number}
-                        </TableCell>
+                        </TableCell> */}
                         <TableCell
                           style={{
-                            width: "30%",
+                            width: "50%",
                           }}
                           className={classes.cell}
                         >
@@ -333,10 +333,11 @@ export default function FunctionReferee(props) {
                               val?.nationality?.flag_url
                             }
                           />
+                          {val?.nationality?.name}
                         </TableCell>
                         <TableCell
                           style={{
-                            width: "40%",
+                            width: "50%",
                           }}
                           className={classes.cell}
                         >

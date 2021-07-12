@@ -20,83 +20,89 @@ import TagInput from "./TagInput";
 import DateRangePicker from "./DateRangePicker";
 
 const Forms = React.memo(
-  ({ inputs, loading, readOnly, variant, data, onChange, errors }) => {
-    //scroll into first error
-    const ref = useRef();
-    useEffect(() => {
-      if (ref.current) {
-        ref.current.scrollIntoView();
-      }
-    });
+    ({ inputs, loading, readOnly, variant, data, onChange, errors }) => {
+      //scroll into first error
+      const ref = useRef();
+      useEffect(() => {
+        if (ref.current) {
+          ref.current.scrollIntoView();
+        }
+      });
+      console.log("thanhcong");
+      return (
+        <Fragment>
+          {inputs?.map((row, index) => (
+            <Grid container spacing={3} key={index}>
+              {row.map((column, index) => {
+                if (!column) return null;
+                const { type, label, grid, field, ...otherProps } = column;
 
-    return (
-      <Fragment>
-        {inputs?.map((row, index) => (
-          <Grid container spacing={3} key={index}>
-            {row.map((column, index) => {
-              if (!column) return null;
-              const { type, label, grid, field, ...otherProps } = column;
+                if (type === "region") {
+                  if (readOnly) {
+                    if (!otherProps.readOnlyValue) return null;
+                    return (
+                      <Grid
+                        item
+                        xs={12}
+                        key={index}
+                        style={{ marginBottom: 15 }}
+                      >
+                        <div className="readonly-wrapper">
+                          <label className="readonly-label">{label}</label>
+                          <span className="readonly-value text-break">
+                            {otherProps.readOnlyValue}
+                          </span>
+                        </div>
+                      </Grid>
+                    );
+                  }
 
-              if (type === "region") {
-                if (readOnly) {
-                  if (!otherProps.readOnlyValue) return null;
                   return (
-                    <Grid item xs={12} key={index} style={{ marginBottom: 15 }}>
-                      <div className="readonly-wrapper">
-                        <label className="readonly-label">{label}</label>
-                        <span className="readonly-value text-break">
-                          {otherProps.readOnlyValue}
-                        </span>
-                      </div>
-                    </Grid>
+                    <RegionSelect
+                      variant={variant || "outlined"}
+                      label={label}
+                      values={data}
+                      onChange={otherProps.onChange}
+                      loading={loading}
+                      readOnly={readOnly}
+                      error={errors}
+                      {...otherProps}
+                    />
                   );
                 }
 
                 return (
-                  <RegionSelect
-                    variant={variant || "outlined"}
-                    label={label}
-                    values={data}
-                    onChange={otherProps.onChange}
-                    loading={loading}
-                    readOnly={readOnly}
-                    error={errors}
-                    {...otherProps}
-                  />
+                  <Grid item xs={6} {...grid} key={index}>
+                    <div
+                      id={field}
+                      ref={errors[field] && !ref.current ? ref : null}
+                    >
+                      {column.component ? (
+                        <column.component />
+                      ) : (
+                        <Input
+                          variant={variant || "outlined"}
+                          type={type}
+                          label={label}
+                          value={data[field]}
+                          onChange={(val) => onChange(field, val)}
+                          error={errors[field]}
+                          loading={loading}
+                          readOnly={readOnly}
+                          {...otherProps}
+                        />
+                      )}
+                    </div>
+                  </Grid>
                 );
-              }
-
-              return (
-                <Grid item xs={6} {...grid} key={index}>
-                  <div
-                    id={field}
-                    ref={errors[field] && !ref.current ? ref : null}
-                  >
-                    {column.component ? (
-                      <column.component />
-                    ) : (
-                      <Input
-                        variant={variant || "outlined"}
-                        type={type}
-                        label={label}
-                        value={data[field]}
-                        onChange={(val) => onChange(field, val)}
-                        error={errors[field]}
-                        loading={loading}
-                        readOnly={readOnly}
-                        {...otherProps}
-                      />
-                    )}
-                  </div>
-                </Grid>
-              );
-            })}
-          </Grid>
-        ))}
-      </Fragment>
-    );
-  }
-);
+              })}
+            </Grid>
+          ))}
+        </Fragment>
+      );
+    }
+  ),
+  
 export const FlatForms = React.memo(({ inputs, formik, variant, ...other }) => {
   return (
     <Grid container {...other.rowProps}>

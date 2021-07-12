@@ -21,14 +21,14 @@ export default function (props) {
       label: t("member_screen.family_name"),
       grid: { xs: 12, sm: 6, md: 6 },
     },
-    {
-      field: "accreditation_number_like",
-      type: "text",
-      display: true,
-      variant: "outlined",
-      label: t("referee_screen.accreditation_number"),
-      grid: { xs: 12, sm: 6, md: 6 },
-    },
+    // {
+    //   field: "accreditation_number_like",
+    //   type: "text",
+    //   display: true,
+    //   variant: "outlined",
+    //   label: t("referee_screen.accreditation_number"),
+    //   grid: { xs: 12, sm: 6, md: 6 },
+    // },
     {
       field: "Sport_id",
       queryField: i18n.languages[0] == "en" ? "english_name_like" : "name_like",

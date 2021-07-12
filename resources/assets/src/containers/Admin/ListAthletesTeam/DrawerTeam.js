@@ -35,16 +35,16 @@ export default function DrawerMember(props) {
     setTempMembers(
       check.map((e) => ({
         ...e,
-        organization:
-          typeof e?.organization == "object"
-            ? e?.organization?.abbreviation
-            : e?.organization,
-        function:
-          typeof e?.function == "object"
-            ? i18n.languages[0] == "en"
-              ? e?.function?.english_name
-              : e?.function?.name
-            : e?.function,
+        // organization:
+        //   typeof e?.organization == "object"
+        //     ? e?.organization?.abbreviation
+        //     : e?.organization,
+        // function:
+        //   typeof e?.function == "object"
+        //     ? i18n.languages[0] == "en"
+        //       ? e?.function?.english_name
+        //       : e?.function?.name
+        //     : e?.function,
         sport:
           typeof e?.sport == "object"
             ? i18n.languages[0] == "en"

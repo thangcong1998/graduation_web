@@ -315,7 +315,7 @@ export function AdminRoutes() {
       path: "/team/create",
       component: TeamForm,
       protected: true,
-      perm: "team_add",
+      perm: "",
       name: i18n.t("breadcrums.team_create"),
     },
     {
@@ -343,7 +343,7 @@ export function AdminRoutes() {
       path: "/registration/create",
       component: RegistrationForm,
       protected: true,
-      perm: "register_management_add",
+      perm: "",
       name: i18n.t("breadcrums.registration_create"),
     },
     {

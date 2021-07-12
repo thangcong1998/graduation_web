@@ -262,6 +262,7 @@ export const SplitGrooupsScore = memo((props) => {
           groups: tempGroups,
         });
         if (res) {
+          console.log("thanhcong");
           refetch();
         }
       } catch (e) {}
@@ -509,13 +510,15 @@ export const SplitGrooupsScore = memo((props) => {
           marginTop: 10,
         }}
       >
-        <ButtonUpdate
-          variant="contained"
-          loading={api.loading}
-          // text={i18n.t("sport_screen.user")}
-          onClick={formik.handleSubmit}
-          disabled={disabledEdit}
-        />
+        {!api.loading == true && (
+          <ButtonUpdate
+            variant="contained"
+            loading={api.loading}
+            // text={i18n.t("sport_screen.user")}
+            onClick={formik.handleSubmit}
+            disabled={disabledEdit || api.loading == true}
+          />
+        )}
       </div>
     </div>
   );

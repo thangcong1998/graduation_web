@@ -22,6 +22,9 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\App;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\PasswordReset;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class UserController extends ApiResourceController
 {
@@ -197,42 +200,71 @@ class UserController extends ApiResourceController
     {
         $this->query->with('role');
     }
-    public static function ForgotPassword1($name, $password, $email, $user_name)
+    public static function ForgotPassword1($name, $email, $user_name, $token)
     {
         $data = [
             'name' => $name,
-            'password' => $password,
             'user_name' => $user_name,
             'email' => $email,
+            'token' => $token,
         ];
-
         Mail::to($email)->send(new ForgotPassword($data));
     }
     public function forgotPassword(Request $request)
     {
         $user = \App\Models\User::query()->where('user_name', $request->user_name)->first();
-
-        $password = substr(md5(mt_rand()), 0, 8);
-        if ($user) {
-            $this->ForgotPassword1($user->name, $password, $user->email, $request->user_name);
-            $user->update([
-                'password' => Hash::make($password)
-            ]);
-            return $this->successResponse(['message' => lang::get('response.response_message.new_password')], 403);
-        } else {
-            return response()->json(['message' => lang::get('response.response_message.account_does_not_exist')], 403);
+        try {
+            DB::beginTransaction();
+            // $password = substr(md5(mt_rand()), 0, 8);
+            if ($user) {
+                $passwordReset = PasswordReset::updateOrCreate([
+                    'email' => $user->email,
+                ], [
+                    'token' => Str::random(60)
+                ]);
+                $ac = $this->ForgotPassword1($user->name, $user->email, $request->user_name, $passwordReset->token);
+                DB::commit();
+                return $this->successResponse(['message' => lang::get('response.response_message.new_password')], 403);
+            } else {
+                return response()->json(['message' => lang::get('response.response_message.account_does_not_exist')], 403);
+            }
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+            return $this->errorResponseSystem();
         }
     }
-    public function setBackPassword(Request $request)
+    public function setNewPassword(Request $request)
     {
-        $user = User::query()->where('user_name', $request->username)->first();
-        if ($user != null) {
-            $user->password = Hash::make($request->password);
-            $user->save();
-            return $this->successResponse(['message' => lang::get('passwords.reset')]);
+        try {
+            DB::beginTransaction();
+            $passwordReset = PasswordReset::query()->where('token', $request->token)->first();
+            if (!$passwordReset) {
+                return response()->json([
+                    'message' => 'Đường dẫn không còn tồn tại vui lòng quay về trang đăng nhập',
+                ], 404);
+            }
+            if (Carbon::parse($passwordReset->updated_at)->addMinutes(5)->isPast()) {
+                $passwordReset->delete();
+                return response()->json([
+                    'message' => 'This password reset token is invalid.',
+                ], 422);
+            }
+            $updatePasswordUser = User::updateOrCreate(['email' => $passwordReset->email], [
+                'password' => Hash::make($request->password)
+            ]);
+            $passwordReset->delete();
+            DB::commit();
+            return response()->json([
+                'message' => 'Cập nhật mật khẩu mới thành công',
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+            return $this->errorResponseSystem();
         }
-        return $this->errorResponseSystem(['message' => lang::get('passwords.cannot_reset_pass')]);
     }
+
 
     public static function downloadForm(Request $request, $name)
     {

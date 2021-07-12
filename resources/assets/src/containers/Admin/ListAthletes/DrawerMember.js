@@ -14,7 +14,7 @@ const useStyle = makeStyles((theme) => ({
 }));
 
 export default function DrawerMember(props) {
-  const { members, setMembers, teamId, sport_id_equal } = props;
+  const { members, setMembers, teamId, sport_discipline_id } = props;
   const { admin, user, perms } = useContext(AuthContext);
   const [tempMembers, setTempMembers] = useState([]);
   const [firstOpen, setFirstOpen] = useState(true);
@@ -72,7 +72,8 @@ export default function DrawerMember(props) {
             setItems={(check) => onCheckMembers(check)}
             columns={memberColumns}
             filterInputs={memberFilter}
-            endpoint={`${endPointApi}/participant?team_id_equal=${teamId}`}
+            // endpoint={`${endPointApi}/participant?team_id_equal=${teamId}`}
+            endpoint={`${endPointApi}/participant?team_id_equal=${teamId}&sport_discipline_id_equal=${sport_discipline_id}`}
           />
         </div>
       </Paper>

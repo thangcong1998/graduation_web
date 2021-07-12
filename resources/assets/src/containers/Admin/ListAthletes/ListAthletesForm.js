@@ -88,7 +88,7 @@ export default function ListAthletesForm(props) {
         .nullable(),
     }),
   });
-  const sport_id_equal = formik.values?.sport_id?.id;
+  const sport_discipline_id = formik.values?.discipline_id?.id;
 
   function onDeleteMembers(ids) {
     if (typeof ids == "object") {
@@ -98,11 +98,11 @@ export default function ListAthletesForm(props) {
     }
   }
   const memberColumns = [
-    {
-      field: "accreditation_number",
-      title: t("staff_screen.accreditation_number"),
-      display: true,
-    },
+    // {
+    //   field: "accreditation_number",
+    //   title: t("staff_screen.accreditation_number"),
+    //   display: true,
+    // },
     {
       field: "given_name",
       title: t("member_screen.given_name"),
@@ -145,7 +145,7 @@ export default function ListAthletesForm(props) {
               classes={classes.paper}
               content={
                 <DrawerMember
-                  sport_id_equal={sport_id_equal}
+                  sport_discipline_id={sport_discipline_id}
                   members={members}
                   setMembers={setMembers}
                   teamId={formik?.values?.team?.id}

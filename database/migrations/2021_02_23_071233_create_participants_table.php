@@ -19,7 +19,6 @@ class CreateParticipantsTable extends Migration
             $table->unsignedBigInteger('card_template_id');
             $table->unsignedBigInteger('organization_id');
             $table->unsignedBigInteger('function_id');
-            $table->string('responsible_organization');
             $table->string('given_name');
             $table->string('family_name');
             $table->string('passport_no')->nullable();

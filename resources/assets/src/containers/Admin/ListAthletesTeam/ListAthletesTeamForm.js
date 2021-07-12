@@ -108,11 +108,11 @@ export default function ListAthletesForm(props) {
   });
 
   const teamColumns = [
-    {
-      field: "accreditation_number",
-      title: t("staff_screen.accreditation_number"),
-      display: true,
-    },
+    // {
+    //   field: "accreditation_number",
+    //   title: t("staff_screen.accreditation_number"),
+    //   display: true,
+    // },
     {
       field: "given_name",
       title: t("member_screen.given_name"),

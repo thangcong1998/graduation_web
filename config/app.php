@@ -184,6 +184,8 @@ return [
         Prettus\Repository\Providers\RepositoryServiceProvider::class,
         Milon\Barcode\BarcodeServiceProvider::class,
 
+        // mail
+        App\Providers\MailConfigServiceProvider::class,
     ],
 
     /*

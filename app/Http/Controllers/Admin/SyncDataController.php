@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\SyncDatagraduationGms;
 use App\Http\Controllers\ApiResourceController;
 use App\Models\SyncDataSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Helpers\SyncDataSeagameGms;
 use App\Models\AuditSyncDataSetting;
 use App\Models\CardTemplate;
 use App\Models\CompetitorVenue;
@@ -70,7 +72,61 @@ class SyncDataController extends ApiResourceController
         }
     }
 
-
+    public function syncData(Request $request)
+    {
+        try {
+            $item = SyncDataSetting::query()->where('id', $request->id)->first();
+            if ($item) {
+                $item->update([
+                    'api_url' => $request->api_url,
+                ]);
+            }
+            $sport = new SyncDatagraduationGms();
+            $method = "GET";
+            $api_url = $request->api_url;
+            $id = $request->id;
+            $name_data_sync = SyncDataSetting::query()->where("id", $id)->first();
+            $params = [];
+            $data =   $sport->syncdata($method, $api_url, $params);
+            // return response()->json($data);
+            if ($name_data_sync) {
+                if ($name_data_sync->name == "Sport") {
+                    $sport_data  = $this->dataSyncSport($data->sports, $sport);
+                    $discipline = $this->dataSyncDiscipline($data->disciplines, $sport);
+                    $event = $this->dataSyncEvent($data->events, $sport);
+                }
+                // return $data->countries;
+                if ($name_data_sync->name == "Country") {
+                    $country = $this->dataSyncCountry($data->countries, $sport);
+                }
+                if ($name_data_sync->name == "Teams") {
+                    $team = $this->dataSyncTeam($data->teams, $data);
+                }
+                if ($name_data_sync->name == "Regions") {
+                    $regions = $this->dataSyncRegion($data->regions, $data);
+                }
+                if ($name_data_sync->name == "Functions") {
+                    $functions_data = $this->dataSyncFunctions($data->functions);
+                }
+                if ($name_data_sync->name == "Venue") {
+                    $venue_data = $this->dataSyncVenue($data->venues);
+                }
+                if ($name_data_sync->name == "CardSetting") {
+                    $organizations_data = $this->dataOrganizations($data->organizations);
+                    $categories_data = $this->dataSyncCategories($data->categories);
+                }
+            }
+            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);;
+        } catch (ClientException $e) {
+            throw $e;
+            $response = $e->getResponse();
+            $responseBodyAsString = $response->getStatusCode();
+            if ($responseBodyAsString == 404) {
+                return response()->json(['message' => Lang::get('response.response_message.api_url_does_not_exist')], 404);
+            }
+            return $this->errorResponseSystem();
+        }
+    }
 
     public function dataSyncFunctions($cardSetting_data)
     {
@@ -132,11 +188,11 @@ class SyncDataController extends ApiResourceController
         $data_country1 = new Country();
         $fields = $data_country1->getFillable();
         //
-        DB::table('m_countries')->delete();
+        // DB::table('m_countries')->delete();
         DB::beginTransaction();
+        DB::statement('SET FOREIGN_KEY_CHECKS=0');
+        DB::table('m_countries')->truncate();
         $country_data = [];
-        Log::info($data_country);
-
         try {
             foreach ($data_country as $key => $dt) {
                 foreach ($fields as $fl) {
@@ -150,6 +206,7 @@ class SyncDataController extends ApiResourceController
             }
             DB::table('m_countries')->insert($country_data);
             AuditSyncDataSetting::query()->where('name', "MasterData")->update(["updated_at" => Carbon::now('Asia/Ho_Chi_Minh')]);
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
             DB::commit();
             return 1;
         } catch (\Exception $e) {
@@ -196,7 +253,6 @@ class SyncDataController extends ApiResourceController
         DB::beginTransaction();
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         DB::table('team')->truncate();
-        DB::statement('SET FOREIGN_KEY_CHECKS=1');
         $team_data = [];
         try {
             foreach ($data_team as $key => $dt) {
@@ -207,6 +263,7 @@ class SyncDataController extends ApiResourceController
             }
             DB::table('team')->insert($team_data);
             DB::commit();
+            DB::statement('SET FOREIGN_KEY_CHECKS=1');
             return 1;
         } catch (\Exception $e) {
             $this->errorResponseSystem();
@@ -387,6 +444,82 @@ class SyncDataController extends ApiResourceController
         }
     }
 
+    public function syncDataParticipant(Request $request)
+    {
+        $participant_url = SyncDataSetting::query()->where('name', 'Participant')->first();
+        $sync_data = new SyncDatagraduationGms();
+        $method = "GET";
+        $api_url = $participant_url->api_url;
+        $params = ["team_id" => $request->team_id];
+        $data =   $sync_data->syncdata($method, $api_url, $params);
+        $participant = $data->participants;
+        // return response()->json($participant);
+        // Participant::query()->where('team_id', $request->team_id)->forceDelete();
+        DB::beginTransaction();
+        try {
+            foreach ($participant as $dt) {
+                DB::table('participants')->updateOrInsert(
+                    [
+                        'id' => $dt->id,
+                    ],
+                    [
+                        'id' => $dt->id,
+                        'card_no' => $dt->card_no,
+                        'card_template_id' => $dt->card_template_id,
+                        'organization_id' => $dt->organization_id,
+                        'function_id' => $dt->function_id,
+                        'responsible_organization' => $dt->responsible_organization,
+                        'given_name' => $dt->given_name,
+                        'family_name' => $dt->family_name,
+                        'passport_no' => $dt->passport_no,
+                        'passport_expire_date' => $dt->passport_expire_date,
+                        'personal_id_card_no' => $dt->personal_id_card_no,
+                        'personal_id_card_issue_date' => $dt->personal_id_card_issue_date,
+                        'personal_id_card_issue_department' => $dt->personal_id_card_issue_department,
+                        'sex' => $dt->sex,
+                        'dob' => $dt->dob,
+                        'country_of_birth_id' => $dt->country_of_birth_id,
+                        'nationality_id' => $dt->nationality_id,
+                        'team_id' => $dt->team_id,
+                        'permanent_address' => $dt->permanent_address,
+                        'approval_status' => $dt->approval_status,
+                        'profile_url' => $dt->profile_url,
+                        'personal_id_card_url' => $dt->personal_id_card_url,
+                        'file_scan' => $dt->file_scan,
+                        'sport_id' => $dt->sport_id,
+                        'sport_discipline_id' => $dt->sport_discipline_id,
+                        'printed_status' => $dt->printed_status,
+                        'received_status' => $dt->received_status,
+                        'personal_card' => $dt->personal_card,
+                        'accreditation_number' => $dt->accreditation_number,
+                        'doping_url' => $dt->doping_url,
+                        'height' => $dt->height,
+                        'weight' => $dt->weight,
+                    ]
+                );
+                if ($dt->profile_url) {
+                    $image = $sync_data->syncImage($dt->profile_url);
+                    Storage::disk('public')->put($dt->profile_url, $image);
+                }
+                if ($dt->personal_id_card_url) {
+                    $image = $sync_data->syncImage($dt->personal_id_card_url);
+                    Storage::disk('public')->put($dt->personal_id_card_url, $image);
+                }
+            }
+            // return response()->json($data);
+
+            // return $event_team_id;
+            $entryByNameInvidial = $this->syncDataCompetitorIndividual($data->individual_competitors, $request->team_id);
+            $event_teams = $this->syncDataEventTeams($data->event_teams, $request->team_id);
+            DB::commit();
+            AuditSyncDataSetting::query()->where('name', "Participant")->update(["updated_at" => Carbon::now('Asia/Ho_Chi_Minh')]);
+            return response()->json(['message' => Lang::get('response.response_message.result_sync_reponse')], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            $this->errorResponseSystem();
+        }
+    }
+
     public function syncDataCompetitorIndividual($entryByNameInvidial, $team_id)
     {
         DB::beginTransaction();
@@ -410,8 +543,6 @@ class SyncDataController extends ApiResourceController
     {
         DB::beginTransaction();
         try {
-            // EventTeam::query()->where("team_id", $team_id)->delete();
-
             foreach ($event_teams as $dt) {
                 $event_team =  EventTeam::query()->updateOrCreate(
                     [

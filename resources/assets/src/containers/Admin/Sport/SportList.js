@@ -21,134 +21,122 @@ import { checkPerm } from "../../../common/constants";
 import PaperContainer from "../../../components/PaperContainer";
 
 export default function SportList(props) {
-    const { t } = useTranslation();
-    const { perms } = useContext(AuthContext);
-    const initialParams = {
-        per_page: 50,
-        page: 1,
-    };
-    const api = useAPI();
-    const endpoint = "/admin/sport";
-    const history = useHistory();
-    const [params, setParams] = useState(initialParams);
-    const { columns, filterInputs } = SportInputs();
-    const { data: data, loading: loading, revalidate: refetch } = useFetch([
-        "get",
-        endpoint,
-        params,
-    ]);
-    const { dialog, handleClose } = useDialog();
-    const GroupAddbtn = (
-        <ButtonGroup variant="contained" color="primary">
-            <ButtonAdd
-                text={t("sport_screen.sport")}
-                onClick={() => {
-                    addSport();
-                }}
-            />
-            <ButtonAdd
-                text={t("sport_screen.sport_discipline")}
-                onClick={() => {
-                    addSportDiscipline();
-                }}
-            />
-            <ButtonAdd
-                text={t("sport_screen.sport_discipline_event")}
-                onClick={() => {
-                    addSportDisciplineEvent(
-                        history.push("/sportDisciplineEvent/create")
-                    );
-                }}
-            />
-        </ButtonGroup>
-    );
-    const addSport = async (row) => {
-        await dialog({
-            title: row
-                ? t("sport_screen.update_sport")
-                : t("sport_screen.add_sport"),
-            content: (
-                <SportForm row={row} close={handleClose} refetch={refetch} />
-            ),
-        });
-    };
-    const addSportDiscipline = async (row) => {
-        await dialog({
-            title: t("sport_screen.add_sport_discipline"),
-            content: (
-                <SportDisciplineForm
-                    row={row}
-                    close={handleClose}
-                    refetch={refetch}
-                />
-            ),
-        });
-    };
-    const addSportDisciplineEvent = async (row) => {
-        await dialog({
-            title: t("sport_screen.add_sport_discipline_event"),
-            content: (
-                <SportDisciplineEventForm
-                    row={row}
-                    close={handleClose}
-                    refetch={refetch}
-                />
-            ),
-        });
-    };
-    const columnCheck = useCheckedColumns({
-        columns: columns,
-        filterFields: filterInputs,
+  const { t } = useTranslation();
+  const { perms } = useContext(AuthContext);
+  const initialParams = {
+    per_page: 50,
+    page: 1,
+  };
+  const api = useAPI();
+  const endpoint = "/admin/sport";
+  const history = useHistory();
+  const [params, setParams] = useState(initialParams);
+  const { columns, filterInputs } = SportInputs();
+  const { data: data, loading: loading, revalidate: refetch } = useFetch([
+    "get",
+    endpoint,
+    params,
+  ]);
+  const { dialog, handleClose } = useDialog();
+  const GroupAddbtn = (
+    <ButtonGroup variant="contained" color="primary">
+      <ButtonAdd
+        text={t("sport_screen.sport")}
+        onClick={() => {
+          addSport();
+        }}
+      />
+      <ButtonAdd
+        text={t("sport_screen.sport_discipline")}
+        onClick={() => {
+          addSportDiscipline();
+        }}
+      />
+      <ButtonAdd
+        text={t("sport_screen.sport_discipline_event")}
+        onClick={() => {
+          addSportDisciplineEvent(history.push("/sportDisciplineEvent/create"));
+        }}
+      />
+    </ButtonGroup>
+  );
+  const addSport = async (row) => {
+    await dialog({
+      title: row ? t("sport_screen.update_sport") : t("sport_screen.add_sport"),
+      content: <SportForm row={row} close={handleClose} refetch={refetch} />,
     });
-    return (
-        <React.Fragment>
-            <PaperContainer>
-                <TableToolbar
-                    addButton={{
-                        render: checkPerm(perms, "sport_management") ? (
-                            GroupAddbtn
-                        ) : (
-                            <div></div>
-                        ),
-                    }}
-                    columns={columnCheck}
-                    filterInput={filterInputs}
-                    handleChangeParams={setParams}
-                    trashed={params?.only_trashed}
-                    loading={loading}
-                />
-                <Datatable
-                    data={data?.data}
-                    columns={columnCheck.columnChecked}
-                    actionColumn={{
-                        onEdit: {
-                            display: checkPerm(perms, "sport_management"),
-                            callback: (row) => addSport(row),
-                        },
-                        onDelete: {
-                            display: false,
-                            action: "force",
-                        },
-                        onRestore: false,
-                        endpoint: endpoint,
-                        refetch: refetch,
-                    }}
-                    onClickRow={{ collapse: true }}
-                    onSort={setParams}
-                    loading={loading}
-                    collapse={(row) => (
-                        <SportDiscipline sport={row} refetch={refetch} />
-                    )}
-                />
-                <Pagination
-                    setParams={setParams}
-                    count={data?.last_page}
-                    page={params?.page}
-                    perPage={params.per_page}
-                    fromTo={[data?.from, data?.to]}
-                    total={data?.total}
-                />
-            </PaperContainer>
-        </React.Fragment>
-    );
+  };
+  const addSportDiscipline = async (row) => {
+    await dialog({
+      title: t("sport_screen.add_sport_discipline"),
+      content: (
+        <SportDisciplineForm row={row} close={handleClose} refetch={refetch} />
+      ),
+    });
+  };
+  const addSportDisciplineEvent = async (row) => {
+    await dialog({
+      title: t("sport_screen.add_sport_discipline_event"),
+      content: (
+        <SportDisciplineEventForm
+          row={row}
+          close={handleClose}
+          refetch={refetch}
+        />
+      ),
+    });
+  };
+  const columnCheck = useCheckedColumns({
+    columns: columns,
+    filterFields: filterInputs,
+  });
+  return (
+    <React.Fragment>
+      <PaperContainer>
+        <TableToolbar
+          addButton={{
+            render: checkPerm(perms, "sport_management") ? (
+              GroupAddbtn
+            ) : (
+              <div></div>
+            ),
+          }}
+          columns={columnCheck}
+          filterInput={filterInputs}
+          handleChangeParams={setParams}
+          trashed={params?.only_trashed}
+          loading={loading}
+        />
+        <Datatable
+          data={data?.data}
+          columns={columnCheck.columnChecked}
+          actionColumn={{
+            onEdit: {
+              display: checkPerm(perms, "sport_management"),
+              callback: (row) => addSport(row),
+            },
+            onDelete: {
+              display: true,
+              action: "force",
+            },
+            onRestore: false,
+            endpoint: endpoint,
+            refetch: refetch,
+          }}
+          onClickRow={{ collapse: true }}
+          onSort={setParams}
+          loading={loading}
+          collapse={(row) => <SportDiscipline sport={row} refetch={refetch} />}
+        />
+        <Pagination
+          setParams={setParams}
+          count={data?.last_page}
+          page={params?.page}
+          perPage={params.per_page}
+          fromTo={[data?.from, data?.to]}
+          total={data?.total}
+        />
+      </PaperContainer>
+    </React.Fragment>
+  );
 }

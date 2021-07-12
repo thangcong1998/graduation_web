@@ -10,7 +10,7 @@ return [
         'account_does_not_exist' => 'Account does not exist',
         'errors_login' => 'User name or password does not exist',
         'old_password_incorrect' => 'Ola password incorrect',
-        'new_password' => "New password sent to email",
+        'new_password' => "Check email for password reset link",
         "download_card" => 'Download successful',
         "generate_card" => 'Generate successful',
         "register" => "Register successfully",

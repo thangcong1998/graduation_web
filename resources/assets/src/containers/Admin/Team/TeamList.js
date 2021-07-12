@@ -49,7 +49,11 @@ export default function TeamList(props) {
       <PaperContainer>
         <TableToolbar
           addButton={{
-            display: false,
+            display: true,
+            text: t("team_screen.team"),
+            onClick: () => {
+              history.push("/team/create");
+            },
           }}
           columns={columnCheck}
           endpointDelete={"/admin/bulkDelete/team"}
@@ -61,7 +65,7 @@ export default function TeamList(props) {
           filterInput={filterInputs}
           handleChangeParams={setParams}
           loading={loading}
-          showDelete={false}
+          showDelete={true}
         />
         <DataTable
           data={data?.data}

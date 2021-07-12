@@ -25,24 +25,24 @@ export default function (props) {
         return CheckSex(row.sex, t);
       },
     },
-    {
-      field: "organization",
-      title: t("member_screen.organization"),
-      display: true,
-      render: (row) => {
-        return row?.organization?.abbreviation;
-      },
-    },
-    {
-      field: "function",
-      title: t("member_screen.function"),
-      display: true,
-      render: (row) => {
-        return i18n.languages[0] == "en"
-          ? row?.function?.english_name
-          : row?.function?.name;
-      },
-    },
+    // {
+    //   field: "organization",
+    //   title: t("member_screen.organization"),
+    //   display: true,
+    //   render: (row) => {
+    //     return row?.organization?.abbreviation;
+    //   },
+    // },
+    // {
+    //   field: "function",
+    //   title: t("member_screen.function"),
+    //   display: true,
+    //   render: (row) => {
+    //     return i18n.languages[0] == "en"
+    //       ? row?.function?.english_name
+    //       : row?.function?.name;
+    //   },
+    // },
     {
       field: "team",
       title: t("team_screen.team"),
@@ -53,16 +53,16 @@ export default function (props) {
           : row?.team?.name;
       },
     },
-    {
-      field: "sport",
-      title: t("member_screen.sport"),
-      display: true,
-      render: (row) => {
-        return i18n.languages[0] == "en"
-          ? row?.sport?.english_name
-          : row?.sport?.name;
-      },
-    },
+    // {
+    //   field: "sport",
+    //   title: t("member_screen.sport"),
+    //   display: true,
+    //   render: (row) => {
+    //     return i18n.languages[0] == "en"
+    //       ? row?.sport?.english_name
+    //       : row?.sport?.name;
+    //   },
+    // },
   ];
 
   const filterInputs = [

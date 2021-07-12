@@ -46,7 +46,11 @@ export default function UserList(props) {
       <PaperContainer>
         <TableToolbar
           addButton={{
-            display: false,
+            display: true,
+            text: t("country_screen.country"),
+            onClick: () => {
+              history.push("/country/create");
+            },
           }}
           columns={columnCheck}
           endpoint={"/admin/exportCountry"}

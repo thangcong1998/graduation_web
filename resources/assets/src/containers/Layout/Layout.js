@@ -254,12 +254,12 @@ const Layout = React.memo((props) => {
       path: "/matchSchedule",
       perm: "match_result_all",
     },
-    {
-      label: t("sidebar.parent.medal_table"),
-      icon: <img src={medal} height="24px" width="24px" />,
-      path: "/medalTable",
-      perm: "medal_table_all",
-    },
+    // {
+    //   label: t("sidebar.parent.medal_table"),
+    //   icon: <img src={medal} height="24px" width="24px" />,
+    //   path: "/medalTable",
+    //   perm: "medal_table_all",
+    // },
   ];
 
   const crumbs = useMemo(() => {

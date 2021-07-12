@@ -36,13 +36,13 @@ export default function ListAthletes(props) {
   ]);
   const columns = useMemo(
     () => [
-      {
-        field: "ad.no",
-        title: t("time_keeping_staff_screen.accreditation_number"),
-        display: true,
-        // sort: true,
-        render: (row) => <div>{row?.participant?.accreditation_number}</div>,
-      },
+      // {
+      //   field: "ad.no",
+      //   title: t("time_keeping_staff_screen.accreditation_number"),
+      //   display: true,
+      //   // sort: true,
+      //   render: (row) => <div>{row?.participant?.accreditation_number}</div>,
+      // },
       {
         field: "full_name",
         title: t("reprint_card_screen.name"),

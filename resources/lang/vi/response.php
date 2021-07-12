@@ -10,7 +10,7 @@ return [
         'account_does_not_exist' => 'Không tồn tại tài khoản',
         'errors_login' => 'Tài khoản hoặc mật khẩu không đúng',
         'old_password_incorrect' => 'Mật khẩu cũ không đúng',
-        'new_password' => 'Mật khẩu mới đã được gửi đến email',
+        'new_password' => 'Kiểm tra email để nhận link đổi mật khẩu',
         "download_card" => 'Tải thành công',
         'generate_card' => 'Tạo thẻ thành công',
         "register" => "Đăng ký thành công",

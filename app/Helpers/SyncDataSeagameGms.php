@@ -13,7 +13,7 @@ class SyncDatagraduationGms
 
         $res = $client->request('POST', 'http://dev1.solashi.com:2288/api/login', [
             "json" => [
-                'user_name' => 'thanhcong',
+                'user_name' => 'admin_seagame',
                 'password' => 'Admin@123',
             ],
         ]);

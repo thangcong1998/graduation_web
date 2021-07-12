@@ -122,11 +122,7 @@ export default function RegistrationMember(props) {
   const { admin, user } = useContext(AuthContext);
   const params = useParams();
   const [pre, setPre] = useState(false);
-  const {
-    data: profile,
-    loading: loading,
-    revalidate: refetch,
-  } = useFetch(
+  const { data: profile, loading: loading, revalidate: refetch } = useFetch(
     params?.id
       ? [
           "get",
@@ -161,22 +157,6 @@ export default function RegistrationMember(props) {
   const [oldReg, setOldReg] = useState([]);
 
   const registerSchema = Yup.object().shape({
-    responsible_organization: Yup.string()
-      .required(
-        t("member_registration.responsible_organization") +
-          " " +
-          t("errors.required")
-      )
-      .max(
-        255,
-        t("member_registration.responsible_organization") +
-          " " +
-          t("errors.max.before") +
-          " 255 " +
-          t("errors.max.after")
-      )
-      .trim()
-      .nullable(),
     country_of_birth: Yup.object()
       .required(
         t("member_registration.country_of_birth") + " " + t("errors.required")
@@ -560,6 +540,7 @@ export default function RegistrationMember(props) {
     formik.handleSubmit();
   };
 
+  console.log(formik?.errors);
   const downloadApplication = async () => {
     await formik.setFieldValue("downloadApplication", true);
     formik.handleSubmit();
@@ -1199,7 +1180,6 @@ export default function RegistrationMember(props) {
       </Grid>
 
       <Grid container spacing={1}>
-       
         <Grid container>
           {!profile && (
             <ButtonSolashi
